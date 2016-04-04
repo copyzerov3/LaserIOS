@@ -31,8 +31,10 @@ class SinglePlayerSettingsScene: SKScene
     var mediumLbl: SKLabelNode?;
     var hardLbl: SKLabelNode?;
     
+    //variable used on Jarrett's Computer because the height is randomly shrunk on his computer.
+    var indent: CGFloat = 95.0;
     
-    override func didMoveToView(view: SKView)
+    override func didMoveToView(view: SKView) //creates the Scene
     {
         self.scaleMode = .AspectFill;
         
@@ -43,9 +45,9 @@ class SinglePlayerSettingsScene: SKScene
         self.helpLbl = createLabel("Explains what the mode is that is selected", fontSize: 40,
             position: CGPointMake(self.frame.midX, 40));
         
-        self.playBtn = createButton(CGPointMake(self.frame.width - 35, self.frame.height - 35));
+        self.playBtn = createButton(CGPointMake(self.frame.width - 35, self.frame.height - 35 - indent));
         self.playLbl = createLabel("Play", fontSize: 25,
-            position: CGPointMake(self.frame.width - 35, self.frame.height - 35));
+            position: CGPointMake(self.frame.width - 35, self.frame.height - 35 - indent));
         
         self.timeTrialBtn = createButton(CGPointMake(self.frame.width/3, self.frame.midY + 100));
         self.timeTrialLbl = createLabel("Time Trial", fontSize: 25,
@@ -64,9 +66,9 @@ class SinglePlayerSettingsScene: SKScene
         self.hardLbl = createLabel("Hard", fontSize: 25,
             position: CGPointMake(self.frame.width/6*4, self.frame.midY - 100));
         
-        self.backBtn = createButton(CGPointMake(35, self.frame.height - 35));
+        self.backBtn = createButton(CGPointMake(35, self.frame.height - 35 - indent));
         self.backLbl = createLabel("Back", fontSize: 25,
-            position: CGPointMake(35, self.frame.height - 35));
+            position: CGPointMake(35, self.frame.height - 35 - indent));
         
         self.addChild(titleLbl!);
         self.addChild(diffLbl!);
@@ -88,14 +90,14 @@ class SinglePlayerSettingsScene: SKScene
         
     }
     
-    func createButton(position:CGPoint)->SKSpriteNode
+    func createButton(position:CGPoint)->SKSpriteNode //Function to create Buttons
     {
         let button = SKSpriteNode(color: UIColor.blueColor(), size: CGSize(width: 50, height: 50));
         button.position = position;
         return button;
     }
     
-    func createLabel(text: String, fontSize: CGFloat, position: CGPoint)->SKLabelNode
+    func createLabel(text: String, fontSize: CGFloat, position: CGPoint)->SKLabelNode //function to create Labels
     {
         let label = SKLabelNode(text: text);
         label.fontSize = fontSize;
@@ -106,7 +108,7 @@ class SinglePlayerSettingsScene: SKScene
         return label;
     }
     
-    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?)
+    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) //Handles Touches
     {
         for touch in touches
         {
@@ -115,13 +117,15 @@ class SinglePlayerSettingsScene: SKScene
             
             if node == self.backBtn!
             {
-                let nextscene = GameScene(fileNamed: "MainMenuScene");
+                let nextscene = PlayersSelectScene(fileNamed: "PlayersSelectScene");
                 let transition = SKTransition.doorsOpenHorizontalWithDuration(1);
                 self.view?.presentScene(nextscene!, transition: transition);
             }
             if node == self.playBtn!
             {
-                
+                let nextscene = GameScene(fileNamed: "GameScene");
+                let transition = SKTransition.doorsOpenHorizontalWithDuration(1);
+                self.view?.presentScene(nextscene!, transition: transition);
             }
             if node == self.timeTrialBtn!
             {

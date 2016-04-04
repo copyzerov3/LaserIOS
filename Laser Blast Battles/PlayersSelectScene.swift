@@ -20,8 +20,10 @@ class PlayersSelectScene: SKScene
     var p1Lbl: SKLabelNode?;
     var p2Lbl: SKLabelNode?;
     
+    //variable used on Jarrett's Computer because the height is randomly shrunk on his computer.
+    var indent: CGFloat = 95.0;
     
-    override func didMoveToView(view: SKView)
+    override func didMoveToView(view: SKView) //creates the Scene
     {
         self.scaleMode = .AspectFill;
         
@@ -36,9 +38,9 @@ class PlayersSelectScene: SKScene
         self.p2Lbl = createLabel("2", fontSize: 25,
             position: CGPointMake(self.frame.width/3*2, self.frame.midY));
         
-        self.backBtn = createButton(CGPointMake(35, self.frame.height - 35));
+        self.backBtn = createButton(CGPointMake(35, self.frame.height - 35 - indent));
         self.backLbl = createLabel("Back", fontSize: 25,
-            position: CGPointMake(35, self.frame.height - 35));
+            position: CGPointMake(35, self.frame.height - 35 - indent));
         
         self.addChild(titleLbl!);
         self.addChild(p1Btn!);
@@ -49,14 +51,14 @@ class PlayersSelectScene: SKScene
         self.addChild(p2Lbl!);
     }
     
-    func createButton(position:CGPoint)->SKSpriteNode
+    func createButton(position:CGPoint)->SKSpriteNode //function to create Buttons
     {
         let button = SKSpriteNode(color: UIColor.blueColor(), size: CGSize(width: 50, height: 50));
         button.position = position;
         return button;
     }
     
-    func createLabel(text: String, fontSize: CGFloat, position: CGPoint)->SKLabelNode
+    func createLabel(text: String, fontSize: CGFloat, position: CGPoint)->SKLabelNode //function to create Labels
     {
         let label = SKLabelNode(text: text);
         label.fontSize = fontSize;
@@ -67,7 +69,7 @@ class PlayersSelectScene: SKScene
         return label;
     }
     
-    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?)
+    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) //Handles Touches
     {
         for touch in touches
         {
@@ -76,17 +78,21 @@ class PlayersSelectScene: SKScene
             
             if node == self.backBtn!
             {
-                let nextscene = GameScene(fileNamed: "MainMenuScene");
+                let nextscene = MainMenuScene(fileNamed: "MainMenuScene");
                 let transition = SKTransition.doorsOpenHorizontalWithDuration(1);
                 self.view?.presentScene(nextscene!, transition: transition);
             }
             if node == self.p1Btn!
             {
-                
+                let nextscene = SinglePlayerSettingsScene(fileNamed: "SinglePlayerSettingsScene");
+                let transition = SKTransition.doorsOpenHorizontalWithDuration(1);
+                self.view?.presentScene(nextscene!, transition: transition);
             }
             if node == self.p2Btn!
             {
-                
+                let nextscene = MultiplayerSettingsScene(fileNamed: "MultiplayerSettingsScene");
+                let transition = SKTransition.doorsOpenHorizontalWithDuration(1);
+                self.view?.presentScene(nextscene!, transition: transition);
             }
         }
     }

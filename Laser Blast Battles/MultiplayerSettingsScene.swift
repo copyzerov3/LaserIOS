@@ -52,8 +52,10 @@ class MultiplayerSettingsScene: SKScene
     var round5Lbl: SKLabelNode?;
     var round7Lbl: SKLabelNode?;
     
+    //variable used on Jarrett's Computer because the height is randomly shrunk on his computer.
+    var indent: CGFloat = 95.0;
     
-    override func didMoveToView(view: SKView)
+    override func didMoveToView(view: SKView) //creates the Scene
     {
         self.scaleMode = .AspectFill;
         
@@ -73,12 +75,12 @@ class MultiplayerSettingsScene: SKScene
         self.roundLbl = createLabel("Rounds:", fontSize: 40,
             position: CGPointMake(self.frame.midX/6, self.frame.midY - 125));
         
-        self.playBtn = createButton(CGPointMake(self.frame.width - 35, self.frame.height - 35));
+        self.playBtn = createButton(CGPointMake(self.frame.width - 35, self.frame.height - 35 - indent));
         self.playLbl = createLabel("Play", fontSize: 25,
-            position: CGPointMake(self.frame.width - 35, self.frame.height - 35));
-        self.backBtn = createButton(CGPointMake(35, self.frame.height - 35));
+            position: CGPointMake(self.frame.width - 35, self.frame.height - 35 - indent));
+        self.backBtn = createButton(CGPointMake(35, self.frame.height - 35 - indent));
         self.backLbl = createLabel("Back", fontSize: 25,
-            position: CGPointMake(35, self.frame.height - 35));
+            position: CGPointMake(35, self.frame.height - 35 - indent));
         
         self.powerNoneBtn = createButton(CGPointMake(self.frame.width/7*2, self.frame.midY + 75));
         self.powerNoneLbl = createLabel("None", fontSize: 25,
@@ -156,14 +158,14 @@ class MultiplayerSettingsScene: SKScene
         self.addChild(round7Lbl!);
     }
     
-    func createButton(position:CGPoint)->SKSpriteNode
+    func createButton(position:CGPoint)->SKSpriteNode //function to create Buttons
     {
         let button = SKSpriteNode(color: UIColor.blueColor(), size: CGSize(width: 50, height: 50));
         button.position = position;
         return button;
     }
     
-    func createLabel(text: String, fontSize: CGFloat, position: CGPoint)->SKLabelNode
+    func createLabel(text: String, fontSize: CGFloat, position: CGPoint)->SKLabelNode //function to create Labels
     {
         let label = SKLabelNode(text: text);
         label.fontSize = fontSize;
@@ -174,7 +176,7 @@ class MultiplayerSettingsScene: SKScene
         return label;
     }
     
-    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?)
+    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) //Handles Touches
     {
         for touch in touches
         {
@@ -183,13 +185,15 @@ class MultiplayerSettingsScene: SKScene
             
             if node == self.backBtn!
             {
-                let nextscene = GameScene(fileNamed: "MainMenuScene");
+                let nextscene = PlayersSelectScene(fileNamed: "PlayersSelectScene");
                 let transition = SKTransition.doorsOpenHorizontalWithDuration(1);
                 self.view?.presentScene(nextscene!, transition: transition);
             }
             if node == self.playBtn!
             {
-                
+                let nextscene = GameScene(fileNamed: "GameScene");
+                let transition = SKTransition.doorsOpenHorizontalWithDuration(1);
+                self.view?.presentScene(nextscene!, transition: transition);
             }
             if node == self.powerNoneBtn!
             {

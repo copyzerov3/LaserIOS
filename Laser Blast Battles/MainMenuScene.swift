@@ -30,28 +30,30 @@ class MainMenuScene: SKScene
     var soundEffectsLbl2: SKLabelNode?
     var vibrationLbl: SKLabelNode?
     
-    override func didMoveToView(view: SKView)
+    //variable used on Jarrett's Computer because the height is randomly shrunk on his computer.
+    var indent: CGFloat = 95.0;
+    
+    override func didMoveToView(view: SKView) //creates the Scene
     {
         self.scaleMode = .AspectFill;
-        
         self.titleLbl = createLabel("Laser Blast Battles!", fontSize: 50,
             position: CGPointMake(self.frame.midX, self.frame.height - 25));
         
         self.playBtn = createButton(CGPointMake(self.frame.midX, self.frame.midY));
         self.highScoreBtn = createButton(CGPointMake(self.frame.midX, self.frame.midY - 75));
         self.creditsBtn = createButton(CGPointMake(self.frame.midX, self.frame.midY - 150));
-        self.musicBtn = createButton(CGPointMake(35, 35));
-        self.soundEffectsBtn = createButton(CGPointMake(35 + 75, 35));
-        self.vibrationBtn = createButton(CGPointMake(35 + 150, 35));
+        self.musicBtn = createButton(CGPointMake(35, 35 + indent));
+        self.soundEffectsBtn = createButton(CGPointMake(35 + 75, 35 + indent));
+        self.vibrationBtn = createButton(CGPointMake(35 + 150, 35 + indent));
         
         self.playLbl = createLabel("Play", fontSize: 25, position: CGPointMake(self.frame.midX, self.frame.midY))
         self.highScoreLbl = createLabel("High", fontSize: 25, position: CGPointMake(self.frame.midX, self.frame.midY - 75))
         self.highScoreLbl2 = createLabel("Scores", fontSize: 25, position: CGPointMake(self.frame.midX, self.frame.midY - 75))
         self.creditsLbl = createLabel("Credits", fontSize: 25, position: CGPointMake(self.frame.midX, self.frame.midY - 150))
-        self.musicLbl = createLabel("Music", fontSize: 25, position: CGPointMake(35, 35))
-        self.soundEffectsLbl = createLabel("Sounds", fontSize: 25, position: CGPointMake(35 + 75, 35))
-        self.soundEffectsLbl2 = createLabel("Effects", fontSize: 25, position: CGPointMake(35 + 75, 35))
-        self.vibrationLbl = createLabel("Vibration", fontSize: 25, position: CGPointMake(35 + 150, 35))
+        self.musicLbl = createLabel("Music", fontSize: 25, position: CGPointMake(35, 35 + indent))
+        self.soundEffectsLbl = createLabel("Sounds", fontSize: 25, position: CGPointMake(35 + 75, 35 + indent))
+        self.soundEffectsLbl2 = createLabel("Effects", fontSize: 25, position: CGPointMake(35 + 75, 35 + indent))
+        self.vibrationLbl = createLabel("Vibration", fontSize: 25, position: CGPointMake(35 + 150, 35 + indent))
         
         self.addChild(titleLbl!);
         self.addChild(playBtn!);
@@ -68,14 +70,15 @@ class MainMenuScene: SKScene
         self.addChild(vibrationLbl!);
     }
     
-    func createButton(position:CGPoint)->SKSpriteNode
+    func createButton(position:CGPoint)->SKSpriteNode //function to create Buttons
     {
         let button = SKSpriteNode(color: UIColor.blueColor(), size: CGSize(width: 50, height: 50));
+        //button.anchorPoint = CGPointMake(0, 0);
         button.position = position;
         return button;
     }
     
-    func createLabel(text: String, fontSize: CGFloat, position: CGPoint)->SKLabelNode
+    func createLabel(text: String, fontSize: CGFloat, position: CGPoint)->SKLabelNode //function to create Labels
     {
         let label = SKLabelNode(text: text);
         label.fontSize = fontSize;
@@ -86,7 +89,7 @@ class MainMenuScene: SKScene
         return label;
     }
     
-    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?)
+    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) //Handles Touches
     {
         for touch in touches
         {
@@ -101,11 +104,16 @@ class MainMenuScene: SKScene
             }
             if node == self.highScoreBtn!
             {
-                
+                let nextscene = HighScoresScene(fileNamed: "HighScoresScene");
+                let transition = SKTransition.doorsOpenHorizontalWithDuration(1);
+                self.view?.presentScene(nextscene!, transition: transition);
             }
             if node == self.creditsBtn!
             {
-                
+                let nextscene = CreditsScene(fileNamed: "CreditsScene");
+                let transition = SKTransition.doorsOpenHorizontalWithDuration(1);
+                self.view?.presentScene(nextscene!, transition: transition);
+
             }
             if node == self.musicBtn!
             {

@@ -25,7 +25,19 @@ class HighScoresScene: SKScene
     var backBtn: SKSpriteNode?; //Top Left
     var backLbl: SKLabelNode?;
     
-    override func didMoveToView(view: SKView)
+    //variable used on Jarrett's Computer because the height is randomly shrunk on his computer.
+    var indent: CGFloat = 95.0;
+    
+    //Used to Load and Save Highscores locally
+    var HighscoreDefault = NSUserDefaults.standardUserDefaults();
+    var timeEasy = 0;
+    var timeMed = 0;
+    var timeHigh = 0;
+    var maraEasy = 0;
+    var maraMed = 0;
+    var maraHigh = 0;
+    
+    override func didMoveToView(view: SKView) //Creates the Scene
     {
         self.scaleMode = .AspectFill;
         
@@ -50,9 +62,9 @@ class HighScoresScene: SKScene
         self.maraHardLbl = createLabel("Hard: ", fontSize: 40,
             position: CGPointMake(self.frame.width/4*3 , self.frame.height/6*1));
         
-        self.backBtn = createButton(CGPointMake(35, self.frame.height - 35));
+        self.backBtn = createButton(CGPointMake(35, self.frame.height - 35 - indent));
         self.backLbl = createLabel("Back", fontSize: 25,
-            position: CGPointMake(35, self.frame.height - 35));
+            position: CGPointMake(35, self.frame.height - 35 - indent));
         
         self.addChild(titleLbl!);
         self.addChild(titleTimeLbl!);
@@ -65,16 +77,22 @@ class HighScoresScene: SKScene
         self.addChild(maraHardLbl!);
         self.addChild(backBtn!);
         self.addChild(backLbl!);
+        
+        if (HighscoreDefault.valueForKey("Highscore") != nil)
+        {
+            timeEasy = HighscoreDefault.valueForKey("Highscore") as! NSInteger;
+            timeEasyLbl?.text = NSString(format: "Easy: %i", timeEasy) as String;
+        }
     }
     
-    func createButton(position:CGPoint)->SKSpriteNode
+    func createButton(position:CGPoint)->SKSpriteNode //function to create Buttons
     {
         let button = SKSpriteNode(color: UIColor.blueColor(), size: CGSize(width: 50, height: 50));
         button.position = position;
         return button;
     }
     
-    func createLabel(text: String, fontSize: CGFloat, position: CGPoint)->SKLabelNode
+    func createLabel(text: String, fontSize: CGFloat, position: CGPoint)->SKLabelNode //function to create Labels
     {
         let label = SKLabelNode(text: text);
         label.fontSize = fontSize;
@@ -85,7 +103,7 @@ class HighScoresScene: SKScene
         return label;
     }
     
-    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?)
+    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) // Handles Touches
     {
         for touch in touches
         {
@@ -94,7 +112,7 @@ class HighScoresScene: SKScene
             
             if node == self.backBtn!
             {
-                let nextscene = GameScene(fileNamed: "MainMenuScene");
+                let nextscene = MainMenuScene(fileNamed: "MainMenuScene");
                 let transition = SKTransition.doorsOpenHorizontalWithDuration(1);
                 self.view?.presentScene(nextscene!, transition: transition);
             }
