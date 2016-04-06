@@ -30,6 +30,8 @@ class MainMenuScene: SKScene
     var soundEffectsLbl2: SKLabelNode?
     var vibrationLbl: SKLabelNode?
     
+    var TestButton:Button?;
+    
     //variable used on Jarrett's Computer because the height is randomly shrunk on his computer.
     var indent: CGFloat = 95.0;
     
@@ -68,6 +70,12 @@ class MainMenuScene: SKScene
         self.addChild(musicLbl!);
         self.addChild(soundEffectsLbl!);
         self.addChild(vibrationLbl!);
+        
+        
+        TestButton = Button(text: "Test");
+        TestButton?.SetPosition(CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame)));
+        TestButton?.onPressCode = {self.view?.presentScene(PlayersSelectScene(fileNamed:"PlayersSelectScene")!,transition:SKTransition.revealWithDirection(SKTransitionDirection.Left, duration: 1));}
+        addChild(TestButton!);
     }
     
     func createButton(position:CGPoint)->SKSpriteNode //function to create Buttons
@@ -88,7 +96,14 @@ class MainMenuScene: SKScene
         //label.position.y -= fontSize/2;
         return label;
     }
-    
+    override func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?)
+    {
+        TestButton?.touchesMoved(touches, withEvent: event);
+    }
+    override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?)
+    {
+        TestButton?.touchesEnded(touches,withEvent:event);
+    }
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) //Handles Touches
     {
         for touch in touches
@@ -117,15 +132,15 @@ class MainMenuScene: SKScene
             }
             if node == self.musicBtn!
             {
-                
+                MusicEnabled = !MusicEnabled;
             }
             if node == self.soundEffectsBtn!
             {
-                
+                SoundEnabled = !SoundEnabled;
             }
             if node == self.vibrationBtn!
             {
-                
+                VibrateEnabled = !VibrateEnabled;
             }
         }
     }

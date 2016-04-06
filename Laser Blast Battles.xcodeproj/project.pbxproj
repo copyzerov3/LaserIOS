@@ -20,6 +20,8 @@
 		43A8B6EB1CA895DC00977FCF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 43A8B6E91CA895DC00977FCF /* Main.storyboard */; };
 		43A8B6ED1CA895DD00977FCF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 43A8B6EC1CA895DD00977FCF /* Assets.xcassets */; };
 		43A8B6F01CA895DD00977FCF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 43A8B6EE1CA895DD00977FCF /* LaunchScreen.storyboard */; };
+		FE6A503D1CB4943E00D87A8B /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE6A503C1CB4943E00D87A8B /* Settings.swift */; };
+		FE6A503F1CB4957700D87A8B /* Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE6A503E1CB4957700D87A8B /* Button.swift */; };
 		FE96F46E1CAA1DCB007ECC02 /* CreditsScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = FE96F46B1CAA1DCB007ECC02 /* CreditsScene.sks */; };
 		FE96F46F1CAA1DCB007ECC02 /* HighScoresScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = FE96F46C1CAA1DCB007ECC02 /* HighScoresScene.sks */; };
 		FE96F4701CAA1DCB007ECC02 /* MainMenuScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = FE96F46D1CAA1DCB007ECC02 /* MainMenuScene.sks */; };
@@ -44,6 +46,8 @@
 		43A8B6EC1CA895DD00977FCF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		43A8B6EF1CA895DD00977FCF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		43A8B6F11CA895DD00977FCF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		FE6A503C1CB4943E00D87A8B /* Settings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
+		FE6A503E1CB4957700D87A8B /* Button.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Button.swift; sourceTree = "<group>"; };
 		FE96F46B1CAA1DCB007ECC02 /* CreditsScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = CreditsScene.sks; sourceTree = "<group>"; };
 		FE96F46C1CAA1DCB007ECC02 /* HighScoresScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = HighScoresScene.sks; sourceTree = "<group>"; };
 		FE96F46D1CAA1DCB007ECC02 /* MainMenuScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = MainMenuScene.sks; sourceTree = "<group>"; };
@@ -98,6 +102,7 @@
 			children = (
 				438D64841CA96A1400647964 /* sks Files */,
 				43A8B6E11CA895DC00977FCF /* AppDelegate.swift */,
+				FE6A503E1CB4957700D87A8B /* Button.swift */,
 				43A8B6E51CA895DC00977FCF /* GameScene.swift */,
 				43A8B6E71CA895DC00977FCF /* GameViewController.swift */,
 				43A8B6E91CA895DC00977FCF /* Main.storyboard */,
@@ -110,6 +115,7 @@
 				4361EBEB1CA9AFEA00428A79 /* PlayersSelectScene.swift */,
 				4361EBED1CA9B00400428A79 /* SinglePlayerSettingsScene.swift */,
 				4361EBEF1CA9B02800428A79 /* MultiplayerSettingsScene.swift */,
+				FE6A503C1CB4943E00D87A8B /* Settings.swift */,
 			);
 			path = "Laser Blast Battles";
 			sourceTree = "<group>";
@@ -196,11 +202,13 @@
 				43A8B6E61CA895DC00977FCF /* GameScene.swift in Sources */,
 				4361EBEC1CA9AFEA00428A79 /* PlayersSelectScene.swift in Sources */,
 				4361EBEA1CA9AFCB00428A79 /* HighScoresScene.swift in Sources */,
+				FE6A503D1CB4943E00D87A8B /* Settings.swift in Sources */,
 				4361EBE81CA9AFA900428A79 /* CreditsScene.swift in Sources */,
 				4361EBF01CA9B02800428A79 /* MultiplayerSettingsScene.swift in Sources */,
 				43A8B6E81CA895DC00977FCF /* GameViewController.swift in Sources */,
 				4361EBE61CA9AF7000428A79 /* MainMenuScene.swift in Sources */,
 				43A8B6E21CA895DC00977FCF /* AppDelegate.swift in Sources */,
+				FE6A503F1CB4957700D87A8B /* Button.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -45,7 +45,7 @@ class GameScene: SKScene
         self.addChild(pauseLbl!);
         self.addChild(powerLbl!);
         
-        Timer = NSTimer.scheduledTimerWithTimeInterval(5.0, target:self, selector: "spawnPowerup", userInfo: nil, repeats: true);
+        Timer = NSTimer.scheduledTimerWithTimeInterval(5.0, target:self, selector: #selector(GameScene.spawnPowerup), userInfo: nil, repeats: true);
         
         if (HighscoreDefault.valueForKey("Highscore") != nil)
         {
@@ -99,7 +99,7 @@ class GameScene: SKScene
             {
                 //Jarrett's Temp Highscore Variables
                 //var HighscoreDefault = NSUserDefaults.standardUserDefaults();
-                highscore++;
+                highscore+=1;
                 HighscoreDefault.setValue(highscore, forKey: "Highscore");
                 HighscoreDefault.synchronize();
             }
