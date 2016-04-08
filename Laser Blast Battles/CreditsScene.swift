@@ -17,8 +17,7 @@ class CreditsScene: SKScene
     var assetsLbl: SKLabelNode? //below ^
     
     //Buttons
-    var backBtn: SKSpriteNode?; //Top Left
-    var backLbl: SKLabelNode?;
+    var BackButton:Button = Button(text: "Back");
     
     //variable used on Jarrett's Computer because the height is randomly shrunk on his computer.
     var indent: CGFloat = 95.0;
@@ -36,16 +35,17 @@ class CreditsScene: SKScene
         self.assetsLbl = createLabel("Asset References", fontSize: 30,
             position: CGPointMake(self.frame.midX, self.frame.midY - 75));
         
-        self.backBtn = createButton(CGPointMake(35, self.frame.height - 35 - indent));
-        self.backLbl = createLabel("Back", fontSize: 25,
-            position: CGPointMake(35, self.frame.height - 35 - indent));
         
+        BackButton.SetPosition(CGPointMake(0,self.frame.height - BackButton.GetHeight() * 2));
+        BackButton.onPressCode =
+        {
+            self.view?.presentScene(MainMenuScene(fileNamed:"MainMenuScene")!,transition:SKTransition.moveInWithDirection(SKTransitionDirection.Right, duration: 1));
+        }
         self.addChild(titleLbl!);
         self.addChild(dougsLbl!);
         self.addChild(jarrettsLbl!);
         self.addChild(assetsLbl!);
-        self.addChild(backBtn!);
-        self.addChild(backLbl!);
+        self.addChild(BackButton);
     }
     
     func createButton(position:CGPoint)->SKSpriteNode //function to create Buttons
@@ -66,19 +66,12 @@ class CreditsScene: SKScene
         return label;
     }
     
-    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) //Handles Touches
+    override func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?)
     {
-        for touch in touches
-        {
-            let location = touch.locationInNode(self);
-            let node = self.nodeAtPoint(location);
-            
-            if node == self.backBtn!
-            {
-                let nextscene = MainMenuScene(fileNamed: "MainMenuScene");
-                let transition = SKTransition.doorsOpenHorizontalWithDuration(1);
-                self.view?.presentScene(nextscene!, transition: transition);
-            }
-        }
+        BackButton.touchesMoved(touches, withEvent: event);
+    }
+    override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?)
+    {
+        BackButton.touchesEnded(touches, withEvent: event);
     }
 }

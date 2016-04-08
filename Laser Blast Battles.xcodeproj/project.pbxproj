@@ -20,6 +20,7 @@
 		43A8B6EB1CA895DC00977FCF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 43A8B6E91CA895DC00977FCF /* Main.storyboard */; };
 		43A8B6ED1CA895DD00977FCF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 43A8B6EC1CA895DD00977FCF /* Assets.xcassets */; };
 		43A8B6F01CA895DD00977FCF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 43A8B6EE1CA895DD00977FCF /* LaunchScreen.storyboard */; };
+		FE5F43971CB730D800389C18 /* ToggleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE5F43961CB730D800389C18 /* ToggleButton.swift */; };
 		FE6A503D1CB4943E00D87A8B /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE6A503C1CB4943E00D87A8B /* Settings.swift */; };
 		FE6A503F1CB4957700D87A8B /* Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE6A503E1CB4957700D87A8B /* Button.swift */; };
 		FE96F46E1CAA1DCB007ECC02 /* CreditsScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = FE96F46B1CAA1DCB007ECC02 /* CreditsScene.sks */; };
@@ -46,6 +47,7 @@
 		43A8B6EC1CA895DD00977FCF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		43A8B6EF1CA895DD00977FCF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		43A8B6F11CA895DD00977FCF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		FE5F43961CB730D800389C18 /* ToggleButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToggleButton.swift; sourceTree = "<group>"; };
 		FE6A503C1CB4943E00D87A8B /* Settings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 		FE6A503E1CB4957700D87A8B /* Button.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Button.swift; sourceTree = "<group>"; };
 		FE96F46B1CAA1DCB007ECC02 /* CreditsScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = CreditsScene.sks; sourceTree = "<group>"; };
@@ -116,6 +118,7 @@
 				4361EBED1CA9B00400428A79 /* SinglePlayerSettingsScene.swift */,
 				4361EBEF1CA9B02800428A79 /* MultiplayerSettingsScene.swift */,
 				FE6A503C1CB4943E00D87A8B /* Settings.swift */,
+				FE5F43961CB730D800389C18 /* ToggleButton.swift */,
 			);
 			path = "Laser Blast Battles";
 			sourceTree = "<group>";
@@ -205,6 +208,7 @@
 				FE6A503D1CB4943E00D87A8B /* Settings.swift in Sources */,
 				4361EBE81CA9AFA900428A79 /* CreditsScene.swift in Sources */,
 				4361EBF01CA9B02800428A79 /* MultiplayerSettingsScene.swift in Sources */,
+				FE5F43971CB730D800389C18 /* ToggleButton.swift in Sources */,
 				43A8B6E81CA895DC00977FCF /* GameViewController.swift in Sources */,
 				4361EBE61CA9AF7000428A79 /* MainMenuScene.swift in Sources */,
 				43A8B6E21CA895DC00977FCF /* AppDelegate.swift in Sources */,
