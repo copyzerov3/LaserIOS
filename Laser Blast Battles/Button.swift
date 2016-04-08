@@ -22,7 +22,7 @@ class Button:SKNode
     {
         super.init();
         ButtonLabel.text = text;
-        ButtonLabel.fontSize = 45;
+        ButtonLabel.fontSize = 25;
         ButtonLabel.fontColor = UIColor.blackColor();
         ButtonRegularState.fillColor = UIColor.whiteColor();
         ButtonPressedState.fillColor = UIColor.grayColor();
@@ -39,11 +39,11 @@ class Button:SKNode
     }
     func GetWidth()->CGFloat
     {
-        return self.frame.width;
+        return self.ButtonRegularState.frame.width;
     }
     func GetHeight()->CGFloat
     {
-        return self.frame.height;
+        return self.ButtonRegularState.frame.height;
     }
     private func PositionLabel()
     {
@@ -67,10 +67,7 @@ class Button:SKNode
     }
     func SetPosition(Position:CGPoint)
     {
-        var pos = Position;
-        pos.x -= (ButtonRegularState.frame.width/2);
-        pos.y -= (ButtonRegularState.frame.height/2);
-        self.position = pos;
+        self.position = Position;
     }
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?)
     {
