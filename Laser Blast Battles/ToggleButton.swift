@@ -4,14 +4,14 @@
 //
 //  Created by Doug McGill on 2016-04-07.
 //  Copyright © 2016 Swift. All rights reserved.
-//
+// Same as the regular buttons but this version toggles instead of being a regular button for specifics in positioning and usage see Button
 
 import SpriteKit
 
 class ToggleButton:SKNode
 {
-    let ButtonRegularState = SKShapeNode(rect: CGRect(x: 0, y: 0, width: 90, height: 90))
-    let ButtonPressedState = SKShapeNode(rect: CGRect(x:0,y:0,width: 90,height:90));
+    var ButtonRegularState = SKShapeNode(rect: CGRect(x: 0, y: 0, width: 90, height: 90))
+    var ButtonPressedState = SKShapeNode(rect: CGRect(x:0,y:0,width: 90,height:90));
     let ButtonLabel = SKLabelNode(fontNamed: "Chalkduster");
     var onPressCode:(()-> Void)?;
     
@@ -30,6 +30,24 @@ class ToggleButton:SKNode
         ButtonPressedState.alpha = 0;
         PositionLabel();
         self.userInteractionEnabled = true;
+    }
+    init(text:String, width:CGFloat,height:CGFloat)
+    {
+        super.init();
+        ButtonRegularState = SKShapeNode(rect: CGRect(x: 0,y: 0,width: width,height: height));
+        ButtonPressedState = SKShapeNode(rect: CGRect(x: 0,y: 0,width: width,height: height));
+        ButtonLabel.text = text;
+        ButtonLabel.fontSize = 25;
+        ButtonLabel.fontColor = UIColor.blackColor();
+        ButtonRegularState.fillColor = UIColor.whiteColor();
+        ButtonPressedState.fillColor = UIColor.grayColor();
+        self.addChild(ButtonRegularState);
+        self.addChild(ButtonPressedState);
+        self.addChild(ButtonLabel);
+        ButtonPressedState.alpha = 0;
+        PositionLabel();
+        self.userInteractionEnabled = true;
+
     }
     
     required init?(coder aDecoder: NSCoder) {

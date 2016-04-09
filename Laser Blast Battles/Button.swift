@@ -6,8 +6,9 @@
 //  Copyright © 2016 GBC. All rights reserved.
 //  By Doug McGill 100734413
 // 
-//  This is used for our buttons and you can swap out the images used using the init which takes two images
-//  It uses a closure as a callback for when the button is released;
+//This Button is reusable and is based on a 16 by 9 ratio taking up 10 percent on each axis.
+//You can set what the button will fire by setting the onPressCode variable to what ever you like.
+//Thing to note is the coordinate system is a tad wonky and 0,0 of the images is the top of the container and the container draws from the bottom so for example if you want to show this you need the y positon = height for it to be at zero one day I will fix this
 
 import SpriteKit
 
