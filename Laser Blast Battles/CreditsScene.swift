@@ -27,7 +27,7 @@ class CreditsScene: SKScene
         self.scaleMode = .AspectFill;
         
         self.titleLbl = createLabel("Laser Blast Battle Credits", fontSize: 50,
-            position: CGPointMake(self.frame.midX, self.frame.height - 25));
+            position: CGPointMake(self.frame.midX, self.frame.height - 140));
         self.dougsLbl = createLabel("What ever Doug does", fontSize: 30,
             position: CGPointMake(self.frame.midX, self.frame.midY + 75));
         self.jarrettsLbl = createLabel("What ever Jarrett does", fontSize: 30,
@@ -39,7 +39,7 @@ class CreditsScene: SKScene
         BackButton.SetPosition(CGPointMake(0,self.frame.height - BackButton.GetHeight() * 2));
         BackButton.onPressCode =
         {
-            self.view?.presentScene(MainMenuScene(fileNamed:"MainMenuScene")!,transition:SKTransition.moveInWithDirection(SKTransitionDirection.Right, duration: 1));
+            self.view?.presentScene(MainMenuScene(fileNamed:"MainMenuScene")!,transition:SKTransition.moveInWithDirection(SKTransitionDirection.Left, duration: 1));
         }
         self.addChild(titleLbl!);
         self.addChild(dougsLbl!);

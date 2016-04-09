@@ -41,7 +41,7 @@ class HighScoresScene: SKScene
         self.scaleMode = .AspectFill;
         
         self.titleLbl = createLabel("Laser Blast Battle High Scores", fontSize: 50,
-            position: CGPointMake(self.frame.midX, self.frame.height - 25));
+            position: CGPointMake(self.frame.midX, self.frame.height - 140));
         
         self.titleTimeLbl = createLabel("Time Trial", fontSize: 40,
             position: CGPointMake(self.frame.width/4 , self.frame.height/6*4));

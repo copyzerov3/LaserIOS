@@ -26,9 +26,9 @@
 		FE96F46E1CAA1DCB007ECC02 /* CreditsScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = FE96F46B1CAA1DCB007ECC02 /* CreditsScene.sks */; };
 		FE96F46F1CAA1DCB007ECC02 /* HighScoresScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = FE96F46C1CAA1DCB007ECC02 /* HighScoresScene.sks */; };
 		FE96F4701CAA1DCB007ECC02 /* MainMenuScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = FE96F46D1CAA1DCB007ECC02 /* MainMenuScene.sks */; };
+		FEA84C7B1CB8945F006A226B /* MultiplayerSettingsScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = FEA84C7A1CB8945F006A226B /* MultiplayerSettingsScene.sks */; };
 		FEB0B2A81CAA1E6000594FD2 /* PlayersSelectScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = FEB0B2A71CAA1E6000594FD2 /* PlayersSelectScene.sks */; };
 		FEC705CB1CAA1F5B00773087 /* SinglePlayerSettingsScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = FEC705CA1CAA1F5B00773087 /* SinglePlayerSettingsScene.sks */; };
-		FEDFF7ED1CAA1F9C00113695 /* MultiplayerSettingsScreen.sks in Resources */ = {isa = PBXBuildFile; fileRef = FEDFF7EC1CAA1F9C00113695 /* MultiplayerSettingsScreen.sks */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -53,9 +53,9 @@
 		FE96F46B1CAA1DCB007ECC02 /* CreditsScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = CreditsScene.sks; sourceTree = "<group>"; };
 		FE96F46C1CAA1DCB007ECC02 /* HighScoresScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = HighScoresScene.sks; sourceTree = "<group>"; };
 		FE96F46D1CAA1DCB007ECC02 /* MainMenuScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = MainMenuScene.sks; sourceTree = "<group>"; };
+		FEA84C7A1CB8945F006A226B /* MultiplayerSettingsScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = MultiplayerSettingsScene.sks; sourceTree = "<group>"; };
 		FEB0B2A71CAA1E6000594FD2 /* PlayersSelectScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = PlayersSelectScene.sks; sourceTree = "<group>"; };
 		FEC705CA1CAA1F5B00773087 /* SinglePlayerSettingsScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = SinglePlayerSettingsScene.sks; sourceTree = "<group>"; };
-		FEDFF7EC1CAA1F9C00113695 /* MultiplayerSettingsScreen.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = MultiplayerSettingsScreen.sks; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -72,7 +72,7 @@
 		438D64841CA96A1400647964 /* sks Files */ = {
 			isa = PBXGroup;
 			children = (
-				FEDFF7EC1CAA1F9C00113695 /* MultiplayerSettingsScreen.sks */,
+				FEA84C7A1CB8945F006A226B /* MultiplayerSettingsScene.sks */,
 				FEC705CA1CAA1F5B00773087 /* SinglePlayerSettingsScene.sks */,
 				FEB0B2A71CAA1E6000594FD2 /* PlayersSelectScene.sks */,
 				FE96F46B1CAA1DCB007ECC02 /* CreditsScene.sks */,
@@ -182,7 +182,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				43A8B6E41CA895DC00977FCF /* GameScene.sks in Resources */,
-				FEDFF7ED1CAA1F9C00113695 /* MultiplayerSettingsScreen.sks in Resources */,
 				FE96F4701CAA1DCB007ECC02 /* MainMenuScene.sks in Resources */,
 				43A8B6F01CA895DD00977FCF /* LaunchScreen.storyboard in Resources */,
 				FEB0B2A81CAA1E6000594FD2 /* PlayersSelectScene.sks in Resources */,
@@ -190,6 +189,7 @@
 				43A8B6EB1CA895DC00977FCF /* Main.storyboard in Resources */,
 				FE96F46E1CAA1DCB007ECC02 /* CreditsScene.sks in Resources */,
 				FE96F46F1CAA1DCB007ECC02 /* HighScoresScene.sks in Resources */,
+				FEA84C7B1CB8945F006A226B /* MultiplayerSettingsScene.sks in Resources */,
 				FEC705CB1CAA1F5B00773087 /* SinglePlayerSettingsScene.sks in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

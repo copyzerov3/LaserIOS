@@ -28,7 +28,7 @@ class MainMenuScene: SKScene
     {
         self.scaleMode = .AspectFill;
         self.titleLbl = createLabel("Laser Blast Battles!", fontSize: 50,
-            position: CGPointMake(self.frame.midX, self.frame.height - 50));
+            position: CGPointMake(self.frame.midX, self.frame.height - 140));
         print("Frame height \(self.frame.height)");
         PlayButton = Button(text:"Play");
         PlayButton?.SetPosition(CGPointMake(self.frame.midX - (PlayButton!.GetWidth() / 2), self.frame.midY + PlayButton!.GetHeight()));

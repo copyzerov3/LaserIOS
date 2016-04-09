@@ -20,151 +20,177 @@ class MultiplayerSettingsScene: SKScene
     var roundLbl: SKLabelNode?
     
     //Buttons
-    var playBtn: SKSpriteNode?; //Top Right
-    var backBtn: SKSpriteNode?; //Top Left
+    var PlayButton:Button = Button(text:"Play");
+    var BackButton:Button = Button(text: "Back");
     //power ups
-    var powerNoneBtn: SKSpriteNode?; //Left
-    var powerLowBtn: SKSpriteNode?; //Right
-    var powerMedBtn: SKSpriteNode?; //Left
-    var powerHighBtn: SKSpriteNode?; //middle
+    var PowerUpsNoneButton: ToggleButton = ToggleButton(text:"None");
+    var PowerUpsLowButton: ToggleButton = ToggleButton(text:"Low");
+    var PowerUpsMediumButton:ToggleButton = ToggleButton(text:"Med");
+    var PowerUpsHighButton:ToggleButton = ToggleButton(text:"High");
     //time
-    var timerNoneBtn: SKSpriteNode?; //Right
-    var timer30Btn: SKSpriteNode?; //Right
-    var timer60Btn: SKSpriteNode?; //Right
-    var timer90Btn: SKSpriteNode?; //Right
+    var TimerNoneButton: ToggleButton = ToggleButton(text:"None");
+    var TimerLowButton: ToggleButton = ToggleButton(text:"30");
+    var TimerMediumButton:ToggleButton = ToggleButton(text:"60");
+    var TimerHighButton:ToggleButton = ToggleButton(text:"90");
     //rounds
-    var round3Btn: SKSpriteNode?; //Right
-    var round5Btn: SKSpriteNode?; //Right
-    var round7Btn: SKSpriteNode?; //Right
-    
-    //Button Labels
-    var backLbl: SKLabelNode?;
-    var playLbl: SKLabelNode?;
-    var powerNoneLbl: SKLabelNode?;
-    var powerLowLbl: SKLabelNode?;
-    var powerMedLbl: SKLabelNode?;
-    var powerHighLbl: SKLabelNode?;
-    var timerNoneLbl: SKLabelNode?;
-    var timer30Lbl: SKLabelNode?;
-    var timer60Lbl: SKLabelNode?;
-    var timer90Lbl: SKLabelNode?;
-    var round3Lbl: SKLabelNode?;
-    var round5Lbl: SKLabelNode?;
-    var round7Lbl: SKLabelNode?;
+    var RoundsLowButton:ToggleButton = ToggleButton(text:"3");
+    var RoundsMediumButton:ToggleButton = ToggleButton(text:"5");
+    var RoundsHighButton:ToggleButton = ToggleButton(text:"7");
     
     //variable used on Jarrett's Computer because the height is randomly shrunk on his computer.
     var indent: CGFloat = 95.0;
     
+    //used to pass variables to the game scene
+    var PowerUps:Int = 2;
+    var Timers:Int = 60;
+    var Rounds:Int = 5;
+    
     override func didMoveToView(view: SKView) //creates the Scene
     {
         self.scaleMode = .AspectFill;
-        
+        PowerUpsMediumButton.SetIsActive(true);
+        TimerMediumButton.SetIsActive(true);
+        RoundsMediumButton.SetIsActive(true);
         self.titleLbl = createLabel("Multiplayer Settings", fontSize: 50,
-            position: CGPointMake(self.frame.midX, self.frame.height - 25));
-        self.inst1Lbl = createLabel("Amount of Power ups that show up during play", fontSize: 40,
-            position: CGPointMake(self.frame.midX, self.frame.midY + 125));
-        self.inst2Lbl = createLabel("The length of each round", fontSize: 40,
-            position: CGPointMake(self.frame.midX, self.frame.midY + 25));
-        self.inst3Lbl = createLabel("The amount of rounds", fontSize: 40,
-            position: CGPointMake(self.frame.midX, self.frame.midY - 75));
+            position: CGPointMake(self.frame.midX, self.frame.height - 140));
+        self.inst1Lbl = createLabel("Amount of Power ups that show up during play", fontSize: 30,
+            position: CGPointMake(self.frame.midX, self.frame.midY + 180));
+        self.inst2Lbl = createLabel("The length of each round", fontSize: 30,
+            position: CGPointMake(self.frame.midX, self.frame.midY + 30));
+        self.inst3Lbl = createLabel("The amount of rounds", fontSize: 30,
+            position: CGPointMake(self.frame.midX, self.frame.midY - 110));
         
-        self.powerLbl = createLabel("Power Ups:", fontSize: 40,
-            position: CGPointMake(self.frame.midX/7, self.frame.midY + 75));
+      /*  self.powerLbl = createLabel("Power Ups:", fontSize: 40,
+            position: CGPointMake(self.frame.midX/5, self.frame.midY + 75));
         self.timerLbl = createLabel("Timer:", fontSize: 40,
             position: CGPointMake(self.frame.midX/7, self.frame.midY - 25));
         self.roundLbl = createLabel("Rounds:", fontSize: 40,
-            position: CGPointMake(self.frame.midX/6, self.frame.midY - 125));
+            position: CGPointMake(self.frame.midX/6, self.frame.midY - 125));*/
         
-        self.playBtn = createButton(CGPointMake(self.frame.width - 35, self.frame.height - 35 - indent));
-        self.playLbl = createLabel("Play", fontSize: 25,
-            position: CGPointMake(self.frame.width - 35, self.frame.height - 35 - indent));
-        self.backBtn = createButton(CGPointMake(35, self.frame.height - 35 - indent));
-        self.backLbl = createLabel("Back", fontSize: 25,
-            position: CGPointMake(35, self.frame.height - 35 - indent));
+        BackButton.SetPosition(CGPointMake(0,self.frame.height - (BackButton.GetHeight() * 2)));
+        BackButton.onPressCode =
+        {
+            self.view?.presentScene(PlayersSelectScene(fileNamed:"PlayersSelectScene")!,transition:SKTransition.moveInWithDirection(SKTransitionDirection.Left, duration: 1));
+        }
+        PlayButton.SetPosition(CGPointMake(self.frame.width - PlayButton.GetWidth(),self.frame.height - (PlayButton.GetHeight() * 2)));
+        PlayButton.onPressCode =
+        {
+            self.view?.presentScene(GameScene(fileNamed:"GameScene")!,transition: SKTransition.moveInWithDirection(SKTransitionDirection.Right, duration: 1));
+        }
+        PowerUpsNoneButton.SetPosition(CGPointMake(self.frame.width/7*2 - (PowerUpsNoneButton.GetWidth() / 2), self.frame.midY + 60));
+        PowerUpsNoneButton.onPressCode =
+        {
+            self.PowerUps = 0;
+            self.PowerUpsLowButton.SetIsActive(false);
+            self.PowerUpsMediumButton.SetIsActive(false);
+            self.PowerUpsHighButton.SetIsActive(false);
+        }
+        PowerUpsLowButton.SetPosition(CGPointMake(self.frame.width/7*3 - (PowerUpsNoneButton.GetWidth() / 2), PowerUpsNoneButton.GetY()));
+        PowerUpsLowButton.onPressCode =
+        {
+            self.PowerUps = 1;
+            self.PowerUpsNoneButton.SetIsActive(false);
+            self.PowerUpsMediumButton.SetIsActive(false);
+            self.PowerUpsHighButton.SetIsActive(false)
+        }
         
-        self.powerNoneBtn = createButton(CGPointMake(self.frame.width/7*2, self.frame.midY + 75));
-        self.powerNoneLbl = createLabel("None", fontSize: 25,
-            position: CGPointMake(self.frame.width/7*2, self.frame.midY + 75));
-        self.powerLowBtn = createButton(CGPointMake(self.frame.width/7*3, self.frame.midY + 75));
-        self.powerLowLbl = createLabel("Low", fontSize: 25,
-            position: CGPointMake(self.frame.width/7*3, self.frame.midY + 75));
-        self.powerMedBtn = createButton(CGPointMake(self.frame.width/7*4, self.frame.midY + 75));
-        self.powerMedLbl = createLabel("Medium", fontSize: 25,
-            position: CGPointMake(self.frame.width/7*4, self.frame.midY + 75));
-        self.powerHighBtn = createButton(CGPointMake(self.frame.width/7*5, self.frame.midY + 75));
-        self.powerHighLbl = createLabel("High", fontSize: 25,
-            position: CGPointMake(self.frame.width/7*5, self.frame.midY + 75));
+        PowerUpsMediumButton.SetPosition(CGPointMake(self.frame.width/7*4 - (PowerUpsNoneButton.GetWidth() / 2), PowerUpsNoneButton.GetY()));
+        PowerUpsMediumButton.onPressCode =
+        {
+            self.PowerUps = 2;
+            self.PowerUpsNoneButton.SetIsActive(false);
+            self.PowerUpsLowButton.SetIsActive(false);
+            self.PowerUpsHighButton.SetIsActive(false);
+        }
+        PowerUpsHighButton.SetPosition(CGPointMake(self.frame.width/7*5 - (PowerUpsNoneButton.GetWidth() / 2), PowerUpsNoneButton.GetY()));
+        PowerUpsHighButton.onPressCode =
+        {
+            self.PowerUps = 3;
+            self.PowerUpsNoneButton.SetIsActive(false);
+            self.PowerUpsLowButton.SetIsActive(false);
+            self.PowerUpsMediumButton.SetIsActive(false);
+        }
         
-        self.timerNoneBtn = createButton(CGPointMake(self.frame.width/7*2, self.frame.midY - 25));
-        self.timerNoneLbl = createLabel("None", fontSize: 25,
-            position: CGPointMake(self.frame.width/7*2, self.frame.midY - 25));
-        self.timer30Btn = createButton(CGPointMake(self.frame.width/7*3, self.frame.midY - 25));
-        self.timer30Lbl = createLabel("30", fontSize: 25,
-            position: CGPointMake(self.frame.width/7*3, self.frame.midY - 25));
-        self.timer60Btn = createButton(CGPointMake(self.frame.width/7*4, self.frame.midY - 25));
-        self.timer60Lbl = createLabel("60", fontSize: 25,
-            position: CGPointMake(self.frame.width/7*4, self.frame.midY - 25));
-        self.timer90Btn = createButton(CGPointMake(self.frame.width/7*5, self.frame.midY - 25));
-        self.timer90Lbl = createLabel("90", fontSize: 25,
-            position: CGPointMake(self.frame.width/7*5, self.frame.midY - 25));
+        TimerNoneButton.SetPosition(CGPointMake(self.frame.width/7*2 - (TimerNoneButton.GetWidth() / 2), self.frame.midY - 90));
+        TimerNoneButton.onPressCode =
+        {
+            self.Timers = 0;
+            self.TimerLowButton.SetIsActive(false);
+            self.TimerMediumButton.SetIsActive(false);
+            self.TimerHighButton.SetIsActive(false);
+        }
+        TimerLowButton.SetPosition(CGPointMake(self.frame.width/7*3 - (TimerNoneButton.GetWidth() / 2), TimerNoneButton.GetY()));
+        TimerLowButton.onPressCode =
+        {
+            self.Timers = 30;
+            self.TimerNoneButton.SetIsActive(false);
+            self.TimerMediumButton.SetIsActive(false);
+            self.TimerHighButton.SetIsActive(false);
+        }
+        TimerMediumButton.SetPosition(CGPointMake(self.frame.width/7*4 - (TimerNoneButton.GetWidth() / 2), TimerLowButton.GetY()));
+        TimerMediumButton.onPressCode =
+        {
+            self.Timers = 60;
+            self.TimerLowButton.SetIsActive(false);
+            self.TimerNoneButton.SetIsActive(false);
+            self.TimerHighButton.SetIsActive(false);
+        }
+        TimerHighButton.SetPosition(CGPointMake(self.frame.width/7*5 - (TimerNoneButton.GetWidth() / 2), TimerLowButton.GetY()));
+        TimerHighButton.onPressCode =
+        {
+            self.Timers = 90;
+            self.TimerLowButton.SetIsActive(false);
+            self.TimerMediumButton.SetIsActive(false);
+            self.TimerNoneButton.SetIsActive(false);
+        }
         
-        self.round3Btn = createButton(CGPointMake(self.frame.width/6*2, self.frame.midY - 125));
-        self.round3Lbl = createLabel("3", fontSize: 25,
-            position: CGPointMake(self.frame.width/6*2, self.frame.midY - 125));
-        self.round5Btn = createButton(CGPointMake(self.frame.width/6*3, self.frame.midY - 125));
-        self.round5Lbl = createLabel("5", fontSize: 25,
-            position: CGPointMake(self.frame.width/6*3, self.frame.midY - 125));
-        self.round7Btn = createButton(CGPointMake(self.frame.width/6*4, self.frame.midY - 125));
-        self.round7Lbl = createLabel("7", fontSize: 25,
-            position: CGPointMake(self.frame.width/6*4, self.frame.midY - 125));
+        RoundsLowButton.SetPosition(CGPointMake(self.frame.width/6*2 - (RoundsLowButton.GetWidth() / 2), self.frame.midY - 235));
+        RoundsLowButton.onPressCode =
+        {
+            self.Rounds = 3;
+            self.RoundsMediumButton.SetIsActive(false);
+            self.RoundsHighButton.SetIsActive(false);
+        }
+        
+        
+        RoundsMediumButton.SetPosition(CGPointMake(self.frame.width/6*3 - (RoundsLowButton.GetWidth() / 2), RoundsLowButton.GetY()));
+        RoundsMediumButton.onPressCode =
+        {
+            self.Rounds = 5;
+            self.RoundsLowButton.SetIsActive(false);
+            self.RoundsHighButton.SetIsActive(false);
+        }
+        RoundsHighButton.SetPosition(CGPointMake(self.frame.width/6*4 - (RoundsLowButton.GetWidth() / 2), RoundsLowButton.GetY()));
+        RoundsHighButton.onPressCode =
+        {
+            self.Rounds = 7;
+            self.RoundsMediumButton.SetIsActive(false);
+            self.RoundsLowButton.SetIsActive(false);
+        }
         
         self.addChild(titleLbl!);
         self.addChild(inst1Lbl!);
         self.addChild(inst2Lbl!);
         self.addChild(inst3Lbl!);
-        self.addChild(powerLbl!);
+        /*self.addChild(powerLbl!);
         self.addChild(timerLbl!);
-        self.addChild(roundLbl!);
+        self.addChild(roundLbl!);*/
         
-        self.addChild(powerNoneBtn!);
-        self.addChild(powerLowBtn!);
-        self.addChild(powerMedBtn!);
-        self.addChild(powerHighBtn!);
+        addChild(BackButton);
+        addChild(PlayButton);
         
-        self.addChild(timerNoneBtn!);
-        self.addChild(timer30Btn!);
-        self.addChild(timer60Btn!);
-        self.addChild(timer90Btn!);
-        
-        self.addChild(round3Btn!);
-        self.addChild(round5Btn!);
-        self.addChild(round7Btn!);
-        
-        self.addChild(playBtn!);
-        self.addChild(backBtn!);
-        
-        self.addChild(playLbl!);
-        self.addChild(backLbl!);
-        self.addChild(powerNoneLbl!);
-        self.addChild(powerLowLbl!);
-        self.addChild(powerMedLbl!);
-        self.addChild(powerHighLbl!);
-        self.addChild(timerNoneLbl!);
-        self.addChild(timer30Lbl!);
-        self.addChild(timer60Lbl!);
-        self.addChild(timer90Lbl!);
-        self.addChild(round3Lbl!);
-        self.addChild(round5Lbl!);
-        self.addChild(round7Lbl!);
+        addChild(RoundsHighButton);
+        addChild(RoundsMediumButton);
+        addChild(RoundsLowButton);
+        addChild(TimerHighButton)
+        addChild(TimerMediumButton);
+        addChild(TimerLowButton);
+        addChild(TimerNoneButton);
+        addChild(PowerUpsMediumButton);
+        addChild(PowerUpsLowButton);
+        addChild(PowerUpsNoneButton);
+        addChild(PowerUpsHighButton)
     }
-    
-    func createButton(position:CGPoint)->SKSpriteNode //function to create Buttons
-    {
-        let button = SKSpriteNode(color: UIColor.blueColor(), size: CGSize(width: 50, height: 50));
-        button.position = position;
-        return button;
-    }
-    
     func createLabel(text: String, fontSize: CGFloat, position: CGPoint)->SKLabelNode //function to create Labels
     {
         let label = SKLabelNode(text: text);
@@ -175,70 +201,14 @@ class MultiplayerSettingsScene: SKScene
         //label.position.y -= fontSize/2;
         return label;
     }
-    
-    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) //Handles Touches
+    override func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?)
     {
-        for touch in touches
-        {
-            let location = touch.locationInNode(self);
-            let node = self.nodeAtPoint(location);
-            
-            if node == self.backBtn!
-            {
-                let nextscene = PlayersSelectScene(fileNamed: "PlayersSelectScene");
-                let transition = SKTransition.doorsOpenHorizontalWithDuration(1);
-                self.view?.presentScene(nextscene!, transition: transition);
-            }
-            if node == self.playBtn!
-            {
-                let nextscene = GameScene(fileNamed: "GameScene");
-                let transition = SKTransition.doorsOpenHorizontalWithDuration(1);
-                self.view?.presentScene(nextscene!, transition: transition);
-            }
-            if node == self.powerNoneBtn!
-            {
-                
-            }
-            if node == self.powerLowBtn!
-            {
-                
-            }
-            if node == self.powerMedBtn!
-            {
-                
-            }
-            if node == self.powerHighBtn!
-            {
-                
-            }
-            if node == self.timerNoneBtn!
-            {
-                
-            }
-            if node == self.timer30Btn!
-            {
-                
-            }
-            if node == self.timer60Btn!
-            {
-                
-            }
-            if node == self.timer90Btn!
-            {
-                
-            }
-            if node == self.round3Btn!
-            {
-                
-            }
-            if node == self.round5Btn!
-            {
-                
-            }
-            if node == self.round7Btn!
-            {
-                
-            }
-        }
+        PlayButton.touchesMoved(touches, withEvent: event);
+        BackButton.touchesMoved(touches,withEvent:event);
+    }
+    override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?)
+    {
+        PlayButton.touchesEnded(touches, withEvent: event);
+        BackButton.touchesEnded(touches, withEvent: event);
     }
 }

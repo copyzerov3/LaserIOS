@@ -13,13 +13,9 @@ class PlayersSelectScene: SKScene
     //Labels
     var titleLbl: SKLabelNode? //Top Middle
     //Buttons
-    var backBtn: SKSpriteNode?; //Top Left
-    var p1Btn: SKSpriteNode?; //Left
-    var p2Btn: SKSpriteNode?; //Right
-    var backLbl: SKLabelNode?;
-    var p1Lbl: SKLabelNode?;
-    var p2Lbl: SKLabelNode?;
-    
+    var BackButton:Button = Button(text: "Back");
+    var OnePlayerButton:Button = Button(text: "One Player");
+    var TwoPlayerButton:Button = Button(text:"Two Player");
     //variable used on Jarrett's Computer because the height is randomly shrunk on his computer.
     var indent: CGFloat = 95.0;
     
@@ -28,36 +24,30 @@ class PlayersSelectScene: SKScene
         self.scaleMode = .AspectFill;
         
         self.titleLbl = createLabel("How Many Players?", fontSize: 40,
-            position: CGPointMake(self.frame.midX, self.frame.height - 25));
+            position: CGPointMake(self.frame.midX, self.frame.height - 140));
         
-        self.p1Btn = createButton(CGPointMake(self.frame.width/3, self.frame.midY));
-        self.p1Lbl = createLabel("1", fontSize: 25,
-            position: CGPointMake(self.frame.width/3, self.frame.midY));
+        OnePlayerButton.SetPosition(CGPointMake(self.frame.width/3 - (OnePlayerButton.GetWidth() / 2), self.frame.midY));
+        OnePlayerButton.onPressCode =
+        {
+            self.view?.presentScene(SinglePlayerSettingsScene(fileNamed:"SinglePlayerSettingsScene")!,transition:SKTransition.moveInWithDirection(SKTransitionDirection.Right, duration: 1));
+        }
+        TwoPlayerButton.SetPosition(CGPointMake(self.frame.width/3*2 - (TwoPlayerButton.GetWidth() / 2), self.frame.midY));
+        TwoPlayerButton.onPressCode =
+        {
+            self.view?.presentScene(MultiplayerSettingsScene(fileNamed:"MultiplayerSettingsScene")!,transition:SKTransition.moveInWithDirection(SKTransitionDirection.Right, duration: 1));
+        }
         
-        self.p2Btn = createButton(CGPointMake(self.frame.width/3*2, self.frame.midY));
-        self.p2Lbl = createLabel("2", fontSize: 25,
-            position: CGPointMake(self.frame.width/3*2, self.frame.midY));
-        
-        self.backBtn = createButton(CGPointMake(35, self.frame.height - 35 - indent));
-        self.backLbl = createLabel("Back", fontSize: 25,
-            position: CGPointMake(35, self.frame.height - 35 - indent));
+        BackButton.SetPosition(CGPointMake(0,self.frame.height - (BackButton.GetHeight()*2)));
+        BackButton.onPressCode =
+        {
+            self.view?.presentScene(MainMenuScene(fileNamed: "MainMenuScene")!,transition:SKTransition.moveInWithDirection(SKTransitionDirection.Left, duration: 1));
+        }
         
         self.addChild(titleLbl!);
-        self.addChild(p1Btn!);
-        self.addChild(p2Btn!);
-        self.addChild(backBtn!);
-        self.addChild(backLbl!);
-        self.addChild(p1Lbl!);
-        self.addChild(p2Lbl!);
+        addChild(BackButton);
+        addChild(OnePlayerButton);
+        addChild(TwoPlayerButton);
     }
-    
-    func createButton(position:CGPoint)->SKSpriteNode //function to create Buttons
-    {
-        let button = SKSpriteNode(color: UIColor.blueColor(), size: CGSize(width: 50, height: 50));
-        button.position = position;
-        return button;
-    }
-    
     func createLabel(text: String, fontSize: CGFloat, position: CGPoint)->SKLabelNode //function to create Labels
     {
         let label = SKLabelNode(text: text);
@@ -68,32 +58,14 @@ class PlayersSelectScene: SKScene
         //label.position.y -= fontSize/2;
         return label;
     }
-    
-    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) //Handles Touches
-    {
-        for touch in touches
-        {
-            let location = touch.locationInNode(self);
-            let node = self.nodeAtPoint(location);
-            
-            if node == self.backBtn!
-            {
-                let nextscene = MainMenuScene(fileNamed: "MainMenuScene");
-                let transition = SKTransition.doorsOpenHorizontalWithDuration(1);
-                self.view?.presentScene(nextscene!, transition: transition);
-            }
-            if node == self.p1Btn!
-            {
-                let nextscene = SinglePlayerSettingsScene(fileNamed: "SinglePlayerSettingsScene");
-                let transition = SKTransition.doorsOpenHorizontalWithDuration(1);
-                self.view?.presentScene(nextscene!, transition: transition);
-            }
-            if node == self.p2Btn!
-            {
-                let nextscene = MultiplayerSettingsScene(fileNamed: "MultiplayerSettingsScene");
-                let transition = SKTransition.doorsOpenHorizontalWithDuration(1);
-                self.view?.presentScene(nextscene!, transition: transition);
-            }
-        }
+    override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        OnePlayerButton.touchesEnded(touches, withEvent: event);
+        TwoPlayerButton.touchesEnded(touches, withEvent: event);
+        BackButton.touchesEnded(touches, withEvent: event);
+    }
+    override func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        OnePlayerButton.touchesMoved(touches, withEvent: event);
+        TwoPlayerButton.touchesMoved(touches, withEvent: event);
+        BackButton.touchesMoved(touches, withEvent: event);
     }
 }
