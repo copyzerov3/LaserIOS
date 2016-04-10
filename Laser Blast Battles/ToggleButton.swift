@@ -19,23 +19,17 @@ class ToggleButton:SKNode
     init(text:String)
     {
         super.init();
-        ButtonLabel.text = text;
-        ButtonLabel.fontSize = 25;
-        ButtonLabel.fontColor = UIColor.blackColor();
-        ButtonRegularState.fillColor = UIColor.whiteColor();
-        ButtonPressedState.fillColor = UIColor.grayColor();
-        self.addChild(ButtonRegularState);
-        self.addChild(ButtonPressedState);
-        self.addChild(ButtonLabel);
-        ButtonPressedState.alpha = 0;
-        PositionLabel();
-        self.userInteractionEnabled = true;
+        InitTheRest(text);
     }
     init(text:String, width:CGFloat,height:CGFloat)
     {
         super.init();
         ButtonRegularState = SKShapeNode(rect: CGRect(x: 0,y: 0,width: width,height: height));
         ButtonPressedState = SKShapeNode(rect: CGRect(x: 0,y: 0,width: width,height: height));
+        InitTheRest(text);
+    }
+    private func InitTheRest(text:String)
+    {
         ButtonLabel.text = text;
         ButtonLabel.fontSize = 25;
         ButtonLabel.fontColor = UIColor.blackColor();
@@ -47,9 +41,7 @@ class ToggleButton:SKNode
         ButtonPressedState.alpha = 0;
         PositionLabel();
         self.userInteractionEnabled = true;
-
     }
-    
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

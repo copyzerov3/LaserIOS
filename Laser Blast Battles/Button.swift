@@ -14,14 +14,25 @@ import SpriteKit
 
 class Button:SKNode
 {
-    let ButtonRegularState = SKShapeNode(rect: CGRect(x: 0, y: 0, width: 160, height: 90))
-    let ButtonPressedState = SKShapeNode(rect: CGRect(x:0,y:0,width: 160,height:90));
+    var ButtonRegularState = SKShapeNode(rect: CGRect(x: 0, y: 0, width: 160, height: 90))
+    var ButtonPressedState = SKShapeNode(rect: CGRect(x:0,y:0,width: 160,height:90));
     let ButtonLabel = SKLabelNode(fontNamed: "Chalkduster");
     var IsPressed:Bool = false;
     var onPressCode:(()-> Void)?;
     init(text:String)
     {
         super.init();
+        InitTheRest(text);
+    }
+    init(text:String, width:CGFloat, height:CGFloat)
+    {
+        super.init();
+        ButtonPressedState = SKShapeNode(rect: CGRect(x:0,y:0,width:width,height:height));
+        ButtonRegularState = SKShapeNode(rect:CGRect(x:0,y:0,width:width, height:height));
+        InitTheRest(text);
+    }
+    private func InitTheRest(text:String)
+    {
         ButtonLabel.text = text;
         ButtonLabel.fontSize = 25;
         ButtonLabel.fontColor = UIColor.blackColor();
@@ -33,8 +44,8 @@ class Button:SKNode
         ButtonPressedState.alpha = 0;
         PositionLabel();
         self.userInteractionEnabled = true;
-    }
 
+    }
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
