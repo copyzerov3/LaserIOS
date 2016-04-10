@@ -75,7 +75,7 @@ class MultiplayerSettingsScene: SKScene
         PlayButton.SetPosition(CGPointMake(self.frame.width - PlayButton.GetWidth(),self.frame.height - (PlayButton.GetHeight() * 2)));
         PlayButton.onPressCode =
         {
-            self.view?.presentScene(GameScene(fileNamed:"GameScene")!,transition: SKTransition.moveInWithDirection(SKTransitionDirection.Right, duration: 1));
+            self.view?.presentScene(GameScene(size:self.size,PowerUps: self.PowerUps,Timer: self.Timers,Rounds: self.Rounds),transition: SKTransition.moveInWithDirection(SKTransitionDirection.Right, duration: 1));
         }
         PowerUpsNoneButton.SetPosition(CGPointMake(self.frame.width/7*2 - (PowerUpsNoneButton.GetWidth() / 2), self.frame.midY + 60));
         PowerUpsNoneButton.onPressCode =

@@ -44,7 +44,7 @@ class SinglePlayerSettingsScene: SKScene
         {
             if(self.GameMode != 0 && self.Difficulty != 0)
             {
-                self.view?.presentScene(GameScene(fileNamed: "GameScene")!,transition:SKTransition.moveInWithDirection(SKTransitionDirection.Right, duration: 1));
+                self.view?.presentScene(GameScene(size:self.size,GameMode: self.GameMode,Difficulty: self.Difficulty),transition:SKTransition.moveInWithDirection(SKTransitionDirection.Right, duration: 1));
             }
         }
         TimeTrialButton.SetPosition(CGPointMake(self.frame.width/3 - (TimeTrialButton.GetWidth() / 2), self.frame.midY + 100));

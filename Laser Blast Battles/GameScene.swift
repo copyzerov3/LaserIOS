@@ -11,11 +11,29 @@ import SpriteKit
 class GameScene: SKScene
 {
     //UI Variables
-    var pauseBtn: SKSpriteNode?;
-    var powerBtn: SKSpriteNode?;
-    var pauseLbl: SKLabelNode?;
-    var powerLbl: SKLabelNode?;
+    var PauseButton:Button = Button(text: "Pause");
+    var PlayerOneButton:Button = Button(text: "TAP", width: 90, height: 90);
+    var PlayerTwoButton:Button = Button(text: "TAP", width: 90, height: 90);
     
+    var NumOfPlayer = 0;
+    
+    let STATE_PLAYING = 0;
+    let STATE_PAUSED = 1;
+    let STATE_CONFIRMING = 2;
+    let STATE_ROUND_BEGINNING = 3;
+    
+    var GameState = 0;
+    
+    var PlayerOne = Player(color:UIColor.blueColor());
+    var PlayerTwo = Player(color:UIColor.blueColor());
+    //SinglePlayer Values
+    var GameMode:Int = 0;
+    var Difficulty:Int = 0;
+    
+    //Multiplayer Values
+    var Rounds:Int = 0;
+    var PowerUpsRate:Int = 0;
+    var TimePerRound:Int = 0;
     //variable used on Jarrett's Computer because the height is randomly shrunk on his computer.
     var indent: CGFloat = 95.0;
     
@@ -30,20 +48,102 @@ class GameScene: SKScene
     var highscore = 0;
     
     var HighscoreDefault = NSUserDefaults.standardUserDefaults();
-
+    
+    
+    //Containers for different states
+    var pauseContainer:PauseContainer?;
+    var confirmationContainer:ConfirmationContainer?;
+    
+    //Init For single player
+    init(size: CGSize,GameMode:Int,Difficulty:Int)
+    {
+        super.init(size: size);
+        self.GameMode = GameMode;
+        self.Difficulty = Difficulty;
+        NumOfPlayer = 1;
+    }
+    //Init for multiplayer
+    init(size:CGSize,PowerUps:Int, Timer:Int,Rounds:Int)
+    {
+        super.init(size:size);
+        self.PowerUpsRate = PowerUps;
+        self.TimePerRound = Timer;
+        NumOfPlayer = 2;
+        self.Rounds = Rounds;
+    }
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+   
     override func didMoveToView(view: SKView) //creates the scene
     {
         self.scaleMode = .AspectFill
+        GameState = STATE_PLAYING;
+        PauseButton.SetPosition(CGPointMake(self.frame.midX - (PauseButton.GetWidth() / 2), PauseButton.GetHeight()));
+        PlayerOneButton.SetPosition(CGPointMake(35, PlayerOneButton.GetHeight()));
+        PlayerTwoButton.SetPosition(CGPointMake(self.frame.width - PlayerTwoButton.GetWidth(),PlayerOneButton.GetY()));
+        PauseButton.onPressCode =
+        {
+            if(self.GameState == self.STATE_PLAYING)
+            {
+                self.ChangeState(self.STATE_PAUSED);
+            }
+        }
+        PlayerOneButton.onPressCode =
+        {
+            if(self.GameState == self.STATE_PLAYING)
+            {
+                self.PlayerOne.AddPower();
+            }
+        }
+        PlayerTwoButton.onPressCode =
+        {
+            if(self.GameState == self.STATE_PLAYING)
+            {
+                self.PlayerTwo.AddPower();
+            }
+        }
+        addChild(PauseButton);
+        addChild(PlayerOneButton);
+        addChild(PlayerOne);
+        addChild(PlayerTwo);
+        if(NumOfPlayer == 2)
+        {
+            addChild(PlayerTwoButton);
+        }
         
-        self.pauseBtn = createButton(CGPointMake(self.frame.midX, 25 + indent));
-        self.powerBtn = createButton(CGPointMake(35, 35 + indent));
-        self.pauseLbl = createLabel("Pause", fontSize: 25, position: CGPointMake(self.frame.midX, 25 + indent))
-        self.powerLbl = createLabel("Power", fontSize: 25, position: CGPointMake(35, 35 + indent))
-        
-        self.addChild(pauseBtn!);
-        self.addChild(powerBtn!);
-        self.addChild(pauseLbl!);
-        self.addChild(powerLbl!);
+        pauseContainer = PauseContainer(width: frame.width, height: frame.height);
+      // pauseContainer?.position.y = frame.height;
+        pauseContainer?.CloseButton.onPressCode =
+        {
+            if(self.GameState == self.STATE_PAUSED)
+            {
+                self.ChangeState(self.STATE_PLAYING);
+            }
+        }
+        pauseContainer?.QuitButton.onPressCode =
+        {
+            if(self.GameState == self.STATE_PAUSED)
+            {
+                self.ChangeState(self.STATE_CONFIRMING);
+            }
+        }
+        confirmationContainer = ConfirmationContainer(width:frame.width, height:frame.height);
+        confirmationContainer?.YesButton.onPressCode =
+        {
+            if(self.GameState == self.STATE_CONFIRMING)
+            {
+                self.view?.presentScene(MainMenuScene(fileNamed: "MainMenuScene")!,transition:SKTransition.moveInWithDirection(SKTransitionDirection.Left, duration: 1));
+            }
+        }
+        confirmationContainer?.NoButton.onPressCode =
+        {
+            if(self.GameState == self.STATE_CONFIRMING)
+            {
+                self.ChangeState(self.STATE_PAUSED);
+            }
+        }
         
         Timer = NSTimer.scheduledTimerWithTimeInterval(5.0, target:self, selector: #selector(GameScene.spawnPowerup), userInfo: nil, repeats: true);
         
@@ -52,24 +152,47 @@ class GameScene: SKScene
             highscore = HighscoreDefault.valueForKey("Highscore") as! NSInteger;
         }
     }
-    
+    func ChangeState(state:Int)
+    {
+        if(state == STATE_PAUSED)
+        {
+            addChild(pauseContainer!);
+            PauseButton.ButtonLabel.alpha = 0;
+            PlayerOneButton.ButtonLabel.alpha = 0;
+            PlayerTwoButton.ButtonLabel.alpha = 0;
+            if(self.GameState == STATE_CONFIRMING)
+            {
+                confirmationContainer?.removeFromParent();
+            }
+        }
+        else if(state == STATE_CONFIRMING)
+        {
+            pauseContainer?.removeFromParent();
+            addChild(confirmationContainer!);
+        }
+        else if(state == STATE_PLAYING)
+        {
+            pauseContainer?.removeFromParent();
+            PauseButton.ButtonLabel.alpha = 1;
+            PlayerOneButton.ButtonLabel.alpha = 1;
+            PlayerTwoButton.ButtonLabel.alpha = 1;
+
+        }
+        GameState = state;
+    }
     func spawnPowerup() //spawns a powerup randomly on the game screen
     {
-        //Doesnt randomize location yet.
+        if(GameState == STATE_PLAYING)
+        {
+            //Doesnt randomize location yet.
         let newPowerup = SKSpriteNode(color: UIColor.blackColor(), size: CGSize(width: 50, height: 50));
         newPowerup.position = CGPointMake(self.frame.midX ,self.frame.midY);
         self.powerup = newPowerup;
         self.addChild(powerup!);
         //return newPowerup;
+
+        }
     }
-    
-    func createButton(position:CGPoint)->SKSpriteNode //function to create Buttons
-    {
-        let button = SKSpriteNode(color: UIColor.blueColor(), size: CGSize(width: 50, height: 50));
-        button.position = position;
-        return button;
-    }
-    
     func createLabel(text: String, fontSize: CGFloat, position: CGPoint)->SKLabelNode //function to create Labels
     {
         let label = SKLabelNode(text: text);
@@ -88,22 +211,7 @@ class GameScene: SKScene
         {
             let location = touch.locationInNode(self)
             let node = self.nodeAtPoint(location)
-            
-            if node == self.pauseBtn!
-            {
-                let nextscene = GameScene(fileNamed: "GameScene")
-                let transition = SKTransition.doorsOpenHorizontalWithDuration(1)
-                self.view?.presentScene(nextscene!, transition: transition)
-            }
-            if (node == self.powerBtn!)
-            {
-                //Jarrett's Temp Highscore Variables
-                //var HighscoreDefault = NSUserDefaults.standardUserDefaults();
-                highscore+=1;
-                HighscoreDefault.setValue(highscore, forKey: "Highscore");
-                HighscoreDefault.synchronize();
-            }
-            if (node == self.powerup! && self.powerup != nil)
+            if (self.powerup != nil && node == self.powerup!)
             {
                 //kills the powerup
                 self.powerup?.removeFromParent();

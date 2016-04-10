@@ -23,6 +23,9 @@
 		FE5F43971CB730D800389C18 /* ToggleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE5F43961CB730D800389C18 /* ToggleButton.swift */; };
 		FE6A503D1CB4943E00D87A8B /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE6A503C1CB4943E00D87A8B /* Settings.swift */; };
 		FE6A503F1CB4957700D87A8B /* Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE6A503E1CB4957700D87A8B /* Button.swift */; };
+		FE8FBC0B1CB9A80C001D6BCF /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE8FBC0A1CB9A80C001D6BCF /* Player.swift */; };
+		FE8FBC0D1CB9AFBA001D6BCF /* PauseContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE8FBC0C1CB9AFBA001D6BCF /* PauseContainer.swift */; };
+		FE8FBC0F1CB9AFD0001D6BCF /* ConfirmationContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE8FBC0E1CB9AFD0001D6BCF /* ConfirmationContainer.swift */; };
 		FE96F46E1CAA1DCB007ECC02 /* CreditsScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = FE96F46B1CAA1DCB007ECC02 /* CreditsScene.sks */; };
 		FE96F46F1CAA1DCB007ECC02 /* HighScoresScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = FE96F46C1CAA1DCB007ECC02 /* HighScoresScene.sks */; };
 		FE96F4701CAA1DCB007ECC02 /* MainMenuScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = FE96F46D1CAA1DCB007ECC02 /* MainMenuScene.sks */; };
@@ -50,6 +53,9 @@
 		FE5F43961CB730D800389C18 /* ToggleButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToggleButton.swift; sourceTree = "<group>"; };
 		FE6A503C1CB4943E00D87A8B /* Settings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 		FE6A503E1CB4957700D87A8B /* Button.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Button.swift; sourceTree = "<group>"; };
+		FE8FBC0A1CB9A80C001D6BCF /* Player.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
+		FE8FBC0C1CB9AFBA001D6BCF /* PauseContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PauseContainer.swift; sourceTree = "<group>"; };
+		FE8FBC0E1CB9AFD0001D6BCF /* ConfirmationContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfirmationContainer.swift; sourceTree = "<group>"; };
 		FE96F46B1CAA1DCB007ECC02 /* CreditsScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = CreditsScene.sks; sourceTree = "<group>"; };
 		FE96F46C1CAA1DCB007ECC02 /* HighScoresScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = HighScoresScene.sks; sourceTree = "<group>"; };
 		FE96F46D1CAA1DCB007ECC02 /* MainMenuScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = MainMenuScene.sks; sourceTree = "<group>"; };
@@ -119,6 +125,9 @@
 				4361EBEF1CA9B02800428A79 /* MultiplayerSettingsScene.swift */,
 				FE6A503C1CB4943E00D87A8B /* Settings.swift */,
 				FE5F43961CB730D800389C18 /* ToggleButton.swift */,
+				FE8FBC0A1CB9A80C001D6BCF /* Player.swift */,
+				FE8FBC0C1CB9AFBA001D6BCF /* PauseContainer.swift */,
+				FE8FBC0E1CB9AFD0001D6BCF /* ConfirmationContainer.swift */,
 			);
 			path = "Laser Blast Battles";
 			sourceTree = "<group>";
@@ -206,10 +215,13 @@
 				4361EBEC1CA9AFEA00428A79 /* PlayersSelectScene.swift in Sources */,
 				4361EBEA1CA9AFCB00428A79 /* HighScoresScene.swift in Sources */,
 				FE6A503D1CB4943E00D87A8B /* Settings.swift in Sources */,
+				FE8FBC0B1CB9A80C001D6BCF /* Player.swift in Sources */,
 				4361EBE81CA9AFA900428A79 /* CreditsScene.swift in Sources */,
 				4361EBF01CA9B02800428A79 /* MultiplayerSettingsScene.swift in Sources */,
 				FE5F43971CB730D800389C18 /* ToggleButton.swift in Sources */,
+				FE8FBC0F1CB9AFD0001D6BCF /* ConfirmationContainer.swift in Sources */,
 				43A8B6E81CA895DC00977FCF /* GameViewController.swift in Sources */,
+				FE8FBC0D1CB9AFBA001D6BCF /* PauseContainer.swift in Sources */,
 				4361EBE61CA9AF7000428A79 /* MainMenuScene.swift in Sources */,
 				43A8B6E21CA895DC00977FCF /* AppDelegate.swift in Sources */,
 				FE6A503F1CB4957700D87A8B /* Button.swift in Sources */,
