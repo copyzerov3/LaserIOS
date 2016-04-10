@@ -25,7 +25,7 @@ class GameScene: SKScene
     var GameState = 0;
     
     var PlayerOne = Player(color:UIColor.blueColor());
-    var PlayerTwo = Player(color:UIColor.blueColor());
+    var PlayerTwo = Player(color:UIColor.redColor());
     //SinglePlayer Values
     var GameMode:Int = 0;
     var Difficulty:Int = 0;
@@ -94,16 +94,27 @@ class GameScene: SKScene
         {
             if(self.GameState == self.STATE_PLAYING)
             {
-                self.PlayerOne.AddPower();
+                self.PlayerTwo.LowerPower(self.PlayerOne.AddPower());
             }
         }
         PlayerTwoButton.onPressCode =
         {
             if(self.GameState == self.STATE_PLAYING)
             {
-                self.PlayerTwo.AddPower();
+                self.PlayerOne.LowerPower(self.PlayerTwo.AddPower());
             }
         }
+        PlayerOne.position = CGPointMake(100,self.frame.height/2);
+        PlayerTwo.position = CGPointMake(self.frame.width - PlayerTwo.PlayerImage.frame.width - 100, PlayerOne.position.y);
+        
+        PlayerOne.MaxLengthOfLaser = Float(PlayerTwo.position.x - (PlayerOne.position.x + PlayerOne.PlayerImage.frame.width));
+        print("Player One X = \(PlayerOne.position.x) PlayerOne Width = \(PlayerOne.PlayerImage.frame.width) PlayerTwo Position = \(PlayerTwo.position.x)");
+        PlayerTwo.MaxLengthOfLaser = PlayerOne.MaxLengthOfLaser;
+        PlayerTwo.direction = 1;
+        
+        PlayerOne.StartLaser();
+        PlayerTwo.StartLaser();
+        
         addChild(PauseButton);
         addChild(PlayerOneButton);
         addChild(PlayerOne);
