@@ -31,10 +31,10 @@ class HighScoresScene: SKScene
     var HighscoreDefault = NSUserDefaults.standardUserDefaults();
     var timeEasy = 0;
     var timeMed = 0;
-    var timeHigh = 0;
+    var timeHard = 0;
     var maraEasy = 0;
     var maraMed = 0;
-    var maraHigh = 0;
+    var maraHard = 0;
     
     override func didMoveToView(view: SKView) //Creates the Scene
     {
@@ -77,11 +77,19 @@ class HighScoresScene: SKScene
         self.addChild(maraHardLbl!);
         self.addChild(BackButton);
         
-        if (HighscoreDefault.valueForKey("Highscore") != nil)
-        {
-            timeEasy = HighscoreDefault.valueForKey("Highscore") as! NSInteger;
-            timeEasyLbl?.text = NSString(format: "Easy: %i", timeEasy) as String;
-        }
+        timeEasy = HighscoreDefault.valueForKey("tEasy") as! NSInteger;
+        timeEasyLbl?.text = NSString(format: "Easy: %i", timeEasy) as String;
+        timeMed = HighscoreDefault.valueForKey("tMedium") as! NSInteger;
+        timeMedLbl?.text = NSString(format: "Medium: %i", timeMed) as String;
+        timeHard = HighscoreDefault.valueForKey("tHard") as! NSInteger;
+        timeHardLbl?.text = NSString(format: "Hard: %i", timeHard) as String;
+        
+        maraEasy = HighscoreDefault.valueForKey("mEasy") as! NSInteger;
+        maraEasyLbl?.text = NSString(format: "Easy: %i", maraEasy) as String;
+        maraMed = HighscoreDefault.valueForKey("mMedium") as! NSInteger;
+        maraMedLbl?.text = NSString(format: "Medium: %i", maraMed) as String;
+        maraHard = HighscoreDefault.valueForKey("mHard") as! NSInteger;
+        maraHardLbl?.text = NSString(format: "Hard: %i", maraHard) as String;
     }
     func createLabel(text: String, fontSize: CGFloat, position: CGPoint)->SKLabelNode //function to create Labels
     {
