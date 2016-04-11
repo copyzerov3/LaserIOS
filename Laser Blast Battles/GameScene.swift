@@ -278,14 +278,26 @@ class GameScene: SKScene
     {
         if(GameState == STATE_PLAYING)
         {
-            //if let someNodeExist = self.powerup
-            //let someNodeExist = self.childNodeWithName("powerup");
-            //if someNodeExist == powerup
             if self.powerup == nil
             {
+                let sizeX = Int(CGRectGetMaxX(self.frame));
+                let sizeY = Int(CGRectGetMaxY(self.frame));
+                let randomX = CGFloat(Int(arc4random()) % sizeX - 50);
+                let randomY = CGFloat(Int(arc4random()) % sizeY - 150);
+                
                 //Doesnt randomize location yet.
                 let newPowerup = SKSpriteNode(color: UIColor.blackColor(), size: CGSize(width: 50, height: 50));
-                newPowerup.position = CGPointMake(self.frame.midX ,self.frame.midY);
+                if (randomX <= self.frame.midX)
+                {
+                    //newPowerup.color = UIColor.blueColor();
+                }
+                else
+                {
+                    //newPowerup.color = UIColor.redColor();
+                }
+                
+                newPowerup.position = CGPointMake(randomX , randomY + 100);
+                //newPowerup.position = CGPointMake(self.frame.midX ,self.frame.midY);
                 self.powerup = newPowerup;
                 self.addChild(self.powerup!);
                 //return newPowerup;
@@ -317,6 +329,11 @@ class GameScene: SKScene
             let node = self.nodeAtPoint(location)
             if (self.powerup != nil && node == self.powerup!)
             {
+                //Burst -> Call PlayerOneButton.onPressCode orPlayerTwoButton.onPressCode 4 times
+                //Switcharoo -> setpower of player 1 to  2 and vice versa
+                //Slow Time -> player.swift setpowerscale to 0.5 then have a timer make it 1 again.
+                //create a bool stunned for each player and timer it off.
+                //Power - > player.swift setpowerscale to 2 then have a timer make it 1 again.
                 //kills the powerup
                 self.powerup?.removeFromParent();
                 self.powerup = nil;
