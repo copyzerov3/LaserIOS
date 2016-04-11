@@ -27,8 +27,8 @@ class GameScene: SKScene
     var PlayerOne = Player(color:UIColor.blueColor());
     var PlayerTwo = Player(color:UIColor.redColor());
     //SinglePlayer Values
-    var GameMode:Int = 0;
-    var Difficulty:Int = 0;
+    var GameMode:Int = 0; //1 = Time Trial & 2 = Marathon
+    var Difficulty:Int = 0; //1 = Easy & 2 = Medium & 3 = Hard
     
     //Multiplayer Values
     var Rounds:Int = 0;
@@ -48,6 +48,7 @@ class GameScene: SKScene
     var highscore = 0;
     
     var HighscoreDefault = NSUserDefaults.standardUserDefaults();
+    // tEasy, tMedium, tHard, mEasy, mMedium, mHard
     
     var CurrentRound:Int = 0;
     var RoundTime:Int = 0;
@@ -200,12 +201,43 @@ class GameScene: SKScene
                 self.ChangeState(self.STATE_PAUSED);
             }
         }
+
+        Timer = NSTimer.scheduledTimerWithTimeInterval(5.0, target:self, selector: ("spawnPowerup"), userInfo: nil, repeats: true);
+
         
-        Timer = NSTimer.scheduledTimerWithTimeInterval(5.0, target:self, selector: "spawnPowerup", userInfo: nil, repeats: true);
-        
-        if (HighscoreDefault.valueForKey("Highscore") != nil)
+        //sets the highscore for the gamemode
+        if (NumOfPlayer == 1)
         {
-            highscore = HighscoreDefault.valueForKey("Highscore") as! NSInteger;
+            if (self.GameMode == 1) //Time Trial
+            {
+                if (self.Difficulty == 1)
+                {
+                    highscore = HighscoreDefault.valueForKey("tEasy") as! NSInteger;
+                }
+                if (self.Difficulty == 2)
+                {
+                    highscore = HighscoreDefault.valueForKey("tMedium") as! NSInteger;
+                }
+                if (self.Difficulty == 3)
+                {
+                    highscore = HighscoreDefault.valueForKey("tHard") as! NSInteger;
+                }
+            }
+            else if (self.GameMode == 2) //Marathon
+            {
+                if (self.Difficulty == 1)
+                {
+                    highscore = HighscoreDefault.valueForKey("mEasy") as! NSInteger;
+                }
+                if (self.Difficulty == 2)
+                {
+                    highscore = HighscoreDefault.valueForKey("mMedium") as! NSInteger;
+                }
+                if (self.Difficulty == 3)
+                {
+                    highscore = HighscoreDefault.valueForKey("mHard") as! NSInteger;
+                }
+            }
         }
     }
     func ChangeState(state:Int)
@@ -240,13 +272,23 @@ class GameScene: SKScene
     {
         if(GameState == STATE_PLAYING)
         {
-            //Doesnt randomize location yet.
-        let newPowerup = SKSpriteNode(color: UIColor.blackColor(), size: CGSize(width: 50, height: 50));
-        newPowerup.position = CGPointMake(self.frame.midX ,self.frame.midY);
-        self.powerup = newPowerup;
-        self.addChild(powerup!);
-        //return newPowerup;
-
+            //if let someNodeExist = self.powerup
+            //let someNodeExist = self.childNodeWithName("powerup");
+            //if someNodeExist == powerup
+            if self.powerup == nil
+            {
+                //Doesnt randomize location yet.
+                let newPowerup = SKSpriteNode(color: UIColor.blackColor(), size: CGSize(width: 50, height: 50));
+                newPowerup.position = CGPointMake(self.frame.midX ,self.frame.midY);
+                self.powerup = newPowerup;
+                self.addChild(self.powerup!);
+                //return newPowerup;
+            }
+            else
+            {
+                self.powerup?.removeFromParent();
+                self.powerup = nil;
+            }
         }
     }
     func createLabel(text: String, fontSize: CGFloat, position: CGPoint)->SKLabelNode //function to create Labels
@@ -271,6 +313,7 @@ class GameScene: SKScene
             {
                 //kills the powerup
                 self.powerup?.removeFromParent();
+                self.powerup = nil;
             }
 
         }

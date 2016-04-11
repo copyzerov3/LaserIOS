@@ -23,6 +23,7 @@ class MainMenuScene: SKScene
     
     //variable used on Jarrett's Computer because the height is randomly shrunk on his computer.
     var indent: CGFloat = 95.0;
+    var HighscoreDefault = NSUserDefaults.standardUserDefaults();
     
     override func didMoveToView(view: SKView) //creates the Scene
     {
@@ -73,6 +74,33 @@ class MainMenuScene: SKScene
         self.addChild(MusicButton!);
         self.addChild(SoundButton!);
         self.addChild(VibrationButton!);
+        
+        //Populates the Highscores for the user (Single Player)
+        if (HighscoreDefault.valueForKey("tEasy") == nil)
+        {
+            HighscoreDefault.setValue(0, forKey: "tEasy");
+        }
+        if (HighscoreDefault.valueForKey("tMedium") == nil)
+        {
+            HighscoreDefault.setValue(0, forKey: "tMedium");
+        }
+        if (HighscoreDefault.valueForKey("tHard") == nil)
+        {
+            HighscoreDefault.setValue(0, forKey: "tHard");
+        }
+        if (HighscoreDefault.valueForKey("mEasy") == nil)
+        {
+            HighscoreDefault.setValue(0, forKey: "mEasy");
+        }
+        if (HighscoreDefault.valueForKey("mMedium") == nil)
+        {
+            HighscoreDefault.setValue(0, forKey: "mMedium");
+        }
+        if (HighscoreDefault.valueForKey("mHard") == nil)
+        {
+            HighscoreDefault.setValue(0, forKey: "mHard");
+        }
+        HighscoreDefault.synchronize();
         
     }
     func createLabel(text: String, fontSize: CGFloat, position: CGPoint)->SKLabelNode //function to create Labels
