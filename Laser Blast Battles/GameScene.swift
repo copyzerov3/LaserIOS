@@ -21,7 +21,7 @@ class GameScene: SKScene
     let STATE_PAUSED = 1;
     let STATE_CONFIRMING = 2;
     let STATE_ROUND_BEGINNING = 3;
-    
+    // 1= time 2 = marathon
     var GameState = 0;
     
     var PlayerOne = Player(color:UIColor.blueColor());
@@ -49,6 +49,8 @@ class GameScene: SKScene
     
     var HighscoreDefault = NSUserDefaults.standardUserDefaults();
     
+    var CurrentRound:Int = 0;
+    var RoundTime:Int = 0;
     
     //Containers for different states
     var pauseContainer:PauseContainer?;
@@ -75,7 +77,11 @@ class GameScene: SKScene
         fatalError("init(coder:) has not been implemented")
     }
     
-   
+    private func Reset()
+    {
+        PlayerOne.SetPower(50);
+        PlayerTwo.SetPower(50);
+    }
     override func didMoveToView(view: SKView) //creates the scene
     {
         self.scaleMode = .AspectFill
@@ -95,6 +101,22 @@ class GameScene: SKScene
             if(self.GameState == self.STATE_PLAYING)
             {
                 self.PlayerTwo.LowerPower(self.PlayerOne.AddPower());
+                if(self.PlayerOne.GetPower() >= 100)
+                {
+                    self.CurrentRound++;
+                    if(self.CurrentRound > self.Rounds || (self.Rounds / 2 < self.CurrentRound && self.NumOfPlayer == 2))
+                    {
+                        if(self.NumOfPlayer == 1)
+                        {
+                            self.view?.presentScene(GameOverScene(size: self.size, GameMode: self.GameMode, Difficulty: self.Difficulty), transition: SKTransition.moveInWithDirection(SKTransitionDirection.Left, duration: 1));
+                        }
+                        else
+                        {
+                            self.view?.presentScene(GameOverScene(size: self.size, PowerUps: self.PowerUpsRate, TimePerRound: self.TimePerRound, Rounds: self.Rounds), transition: SKTransition.moveInWithDirection(SKTransitionDirection.Left, duration: 1));
+                        }
+                    }
+                    self.Reset();
+                }
             }
         }
         PlayerTwoButton.onPressCode =
@@ -102,13 +124,36 @@ class GameScene: SKScene
             if(self.GameState == self.STATE_PLAYING)
             {
                 self.PlayerOne.LowerPower(self.PlayerTwo.AddPower());
+                if(self.PlayerTwo.GetPower() >= 100)
+                {
+                    if(self.NumOfPlayer == 2)
+                    {
+                        self.CurrentRound++;
+                        if(self.CurrentRound > self.Rounds / 2)
+                        {
+                            self.view?.presentScene(GameOverScene(size: self.size, PowerUps: self.PowerUpsRate, TimePerRound: self.TimePerRound, Rounds: self.Rounds), transition: SKTransition.moveInWithDirection(SKTransitionDirection.Left, duration: 1));
+                        }
+                        self.Reset();
+                    }
+                    else
+                    {
+                        if(self.GameMode == 1)
+                        {
+                            self.Reset();
+                        }
+                        else
+                        {
+                            self.view?.presentScene(GameOverScene(size: self.size, GameMode: self.GameMode, Difficulty: self.Difficulty), transition: SKTransition.moveInWithDirection(SKTransitionDirection.Left, duration: 1));
+                        }
+                    }
+                    
+                }
             }
         }
         PlayerOne.position = CGPointMake(100,self.frame.height/2);
         PlayerTwo.position = CGPointMake(self.frame.width - PlayerTwo.PlayerImage.frame.width - 100, PlayerOne.position.y);
         
         PlayerOne.MaxLengthOfLaser = Float(PlayerTwo.position.x - (PlayerOne.position.x + PlayerOne.PlayerImage.frame.width));
-        print("Player One X = \(PlayerOne.position.x) PlayerOne Width = \(PlayerOne.PlayerImage.frame.width) PlayerTwo Position = \(PlayerTwo.position.x)");
         PlayerTwo.MaxLengthOfLaser = PlayerOne.MaxLengthOfLaser;
         PlayerTwo.direction = 1;
         
@@ -156,7 +201,7 @@ class GameScene: SKScene
             }
         }
         
-        Timer = NSTimer.scheduledTimerWithTimeInterval(5.0, target:self, selector: #selector(GameScene.spawnPowerup), userInfo: nil, repeats: true);
+        Timer = NSTimer.scheduledTimerWithTimeInterval(5.0, target:self, selector: "spawnPowerup", userInfo: nil, repeats: true);
         
         if (HighscoreDefault.valueForKey("Highscore") != nil)
         {

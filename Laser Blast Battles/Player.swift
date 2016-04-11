@@ -53,6 +53,11 @@ class Player:SKNode
     {
         PowerScale = value;
     }
+    func SetPower(value:Float)
+    {
+        Power = value;
+        UpdateLaser();
+    }
     private func UpdateLaser()
     {
         Laser.removeFromParent();
