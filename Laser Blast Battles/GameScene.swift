@@ -50,9 +50,11 @@ class GameScene: SKScene
     var HighscoreDefault = NSUserDefaults.standardUserDefaults();
     // tEasy, tMedium, tHard, mEasy, mMedium, mHard
     
-    var CurrentRound:Int = 0;
+    var CurrentRound:Int = 1;
     var RoundTime:Int = 0;
-    
+    var RoundTimer:NSTimer = NSTimer();
+    var TimeLabel:SKLabelNode = SKLabelNode(fontNamed:"Chalkduster");
+    var RoundLabel:SKLabelNode = SKLabelNode(fontNamed:"Chalkduster");
     //Containers for different states
     var pauseContainer:PauseContainer?;
     var confirmationContainer:ConfirmationContainer?;
@@ -129,11 +131,11 @@ class GameScene: SKScene
                 {
                     if(self.NumOfPlayer == 2)
                     {
-                        self.CurrentRound++;
                         if(self.CurrentRound > self.Rounds / 2)
                         {
                             self.view?.presentScene(GameOverScene(size: self.size, PowerUps: self.PowerUpsRate, TimePerRound: self.TimePerRound, Rounds: self.Rounds), transition: SKTransition.moveInWithDirection(SKTransitionDirection.Left, duration: 1));
                         }
+                        self.CurrentRound++;
                         self.Reset();
                     }
                     else
@@ -171,7 +173,6 @@ class GameScene: SKScene
         }
         
         pauseContainer = PauseContainer(width: frame.width, height: frame.height);
-      // pauseContainer?.position.y = frame.height;
         pauseContainer?.CloseButton.onPressCode =
         {
             if(self.GameState == self.STATE_PAUSED)
@@ -203,7 +204,7 @@ class GameScene: SKScene
         }
 
         Timer = NSTimer.scheduledTimerWithTimeInterval(5.0, target:self, selector: ("spawnPowerup"), userInfo: nil, repeats: true);
-
+        RoundTimer = NSTimer.scheduledTimerWithTimeInterval(1, target:self,selector:"OnRoundTimer",userInfo: nil, repeats:true);
         
         //sets the highscore for the gamemode
         if (NumOfPlayer == 1)
@@ -239,6 +240,11 @@ class GameScene: SKScene
                 }
             }
         }
+    }
+    func OnRoundTimer()
+    {
+        self.RoundTime++;
+        
     }
     func ChangeState(state:Int)
     {
