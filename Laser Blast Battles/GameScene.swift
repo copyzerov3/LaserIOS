@@ -137,7 +137,24 @@ class GameScene: SKScene
         }
         
         addChild(RoundLabel);
+        if(NumOfPlayer == 2)
+        {
+             PlayerOneWinsLabel.position = CGPointMake(50, self.frame.height - 150);
+            PlayerOneWinsLabel.fontSize = 30;
+            PlayerOneWinsLabel.text = "\(PlayerOne.RoundsWon)";
+            PlayerOneWinsLabel.color = UIColor.blackColor();
         
+            addChild(PlayerOneWinsLabel);
+        
+            PlayerTwoWinsLabel.position = CGPointMake(self.frame.width - 50, self.frame.height - 150);
+            PlayerTwoWinsLabel.fontSize = 30;
+            PlayerTwoWinsLabel.text = "\(PlayerTwo.RoundsWon)";
+            PlayerTwoWinsLabel.color = UIColor.blackColor();
+        
+        addChild(PlayerTwoWinsLabel);
+
+        }
+               
         PauseButton.SetPosition(CGPointMake(self.frame.midX - (PauseButton.GetWidth() / 2), PauseButton.GetHeight()));
         PlayerOneButton.SetPosition(CGPointMake(35, PlayerOneButton.GetHeight()));
         PlayerTwoButton.SetPosition(CGPointMake(self.frame.width - PlayerTwoButton.GetWidth(),PlayerOneButton.GetY()));
@@ -347,6 +364,7 @@ class GameScene: SKScene
     func PlayerOneCheckWin()
     {
         self.PlayerOne.RoundsWon += 1;
+        PlayerOneWinsLabel.text = "\(PlayerOne.RoundsWon)";
         if(self.GameMode != 2)
         {
             self.RoundLabel.text = "Round \(self.CurrentRound) of \(self.Rounds)";
@@ -374,6 +392,8 @@ class GameScene: SKScene
     }
     func PlayerTwoCheckWin()
     {
+        self.PlayerTwo.RoundsWon += 1;
+        PlayerTwoWinsLabel.text = "\(PlayerTwo.RoundsWon)";
         if(self.NumOfPlayer == 2)
         {
             let Num:Int = Int(round(Float(self.Rounds) / 2));
