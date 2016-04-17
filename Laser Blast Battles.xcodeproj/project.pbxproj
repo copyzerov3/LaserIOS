@@ -23,6 +23,8 @@
 		FE5F43971CB730D800389C18 /* ToggleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE5F43961CB730D800389C18 /* ToggleButton.swift */; };
 		FE6A503D1CB4943E00D87A8B /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE6A503C1CB4943E00D87A8B /* Settings.swift */; };
 		FE6A503F1CB4957700D87A8B /* Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE6A503E1CB4957700D87A8B /* Button.swift */; };
+		FE83830C1CC2B04E00B03942 /* GameOverScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = FE83830A1CC2B04D00B03942 /* GameOverScene.sks */; };
+		FE83830D1CC2B04E00B03942 /* GameOverScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE83830B1CC2B04D00B03942 /* GameOverScene.swift */; };
 		FE8FBC0B1CB9A80C001D6BCF /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE8FBC0A1CB9A80C001D6BCF /* Player.swift */; };
 		FE8FBC0D1CB9AFBA001D6BCF /* PauseContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE8FBC0C1CB9AFBA001D6BCF /* PauseContainer.swift */; };
 		FE8FBC0F1CB9AFD0001D6BCF /* ConfirmationContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE8FBC0E1CB9AFD0001D6BCF /* ConfirmationContainer.swift */; };
@@ -53,6 +55,8 @@
 		FE5F43961CB730D800389C18 /* ToggleButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToggleButton.swift; sourceTree = "<group>"; };
 		FE6A503C1CB4943E00D87A8B /* Settings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 		FE6A503E1CB4957700D87A8B /* Button.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Button.swift; sourceTree = "<group>"; };
+		FE83830A1CC2B04D00B03942 /* GameOverScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameOverScene.sks; sourceTree = "<group>"; };
+		FE83830B1CC2B04D00B03942 /* GameOverScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameOverScene.swift; sourceTree = "<group>"; };
 		FE8FBC0A1CB9A80C001D6BCF /* Player.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
 		FE8FBC0C1CB9AFBA001D6BCF /* PauseContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PauseContainer.swift; sourceTree = "<group>"; };
 		FE8FBC0E1CB9AFD0001D6BCF /* ConfirmationContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfirmationContainer.swift; sourceTree = "<group>"; };
@@ -78,6 +82,7 @@
 		438D64841CA96A1400647964 /* sks Files */ = {
 			isa = PBXGroup;
 			children = (
+				FE83830A1CC2B04D00B03942 /* GameOverScene.sks */,
 				FEA84C7A1CB8945F006A226B /* MultiplayerSettingsScene.sks */,
 				FEC705CA1CAA1F5B00773087 /* SinglePlayerSettingsScene.sks */,
 				FEB0B2A71CAA1E6000594FD2 /* PlayersSelectScene.sks */,
@@ -118,6 +123,7 @@
 				43A8B6EE1CA895DD00977FCF /* LaunchScreen.storyboard */,
 				43A8B6F11CA895DD00977FCF /* Info.plist */,
 				4361EBE51CA9AF7000428A79 /* MainMenuScene.swift */,
+				FE83830B1CC2B04D00B03942 /* GameOverScene.swift */,
 				4361EBE71CA9AFA900428A79 /* CreditsScene.swift */,
 				4361EBE91CA9AFCB00428A79 /* HighScoresScene.swift */,
 				4361EBEB1CA9AFEA00428A79 /* PlayersSelectScene.swift */,
@@ -199,6 +205,7 @@
 				FE96F46E1CAA1DCB007ECC02 /* CreditsScene.sks in Resources */,
 				FE96F46F1CAA1DCB007ECC02 /* HighScoresScene.sks in Resources */,
 				FEA84C7B1CB8945F006A226B /* MultiplayerSettingsScene.sks in Resources */,
+				FE83830C1CC2B04E00B03942 /* GameOverScene.sks in Resources */,
 				FEC705CB1CAA1F5B00773087 /* SinglePlayerSettingsScene.sks in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -212,6 +219,7 @@
 			files = (
 				4361EBEE1CA9B00400428A79 /* SinglePlayerSettingsScene.swift in Sources */,
 				43A8B6E61CA895DC00977FCF /* GameScene.swift in Sources */,
+				FE83830D1CC2B04E00B03942 /* GameOverScene.swift in Sources */,
 				4361EBEC1CA9AFEA00428A79 /* PlayersSelectScene.swift in Sources */,
 				4361EBEA1CA9AFCB00428A79 /* HighScoresScene.swift in Sources */,
 				FE6A503D1CB4943E00D87A8B /* Settings.swift in Sources */,

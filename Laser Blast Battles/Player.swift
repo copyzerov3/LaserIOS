@@ -18,6 +18,8 @@ class Player:SKNode
     let PowerAmount:Float = 1;
     var PowerScale:Float = 1;
     var MaxLengthOfLaser:Float = 0;
+    
+    var RoundsWon:Int = 0;
     init(color:UIColor)
     {
         super.init();

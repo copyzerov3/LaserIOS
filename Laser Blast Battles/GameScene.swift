@@ -33,7 +33,7 @@ class GameScene: SKScene
     //Multiplayer Values
     var Rounds:Int = 0;
     var PowerUpsRate:Int = 0;
-    var TimePerRound:Int = 0;
+    var TimePerRound:Int = 60;
     //variable used on Jarrett's Computer because the height is randomly shrunk on his computer.
     var indent: CGFloat = 95.0;
     
@@ -53,8 +53,14 @@ class GameScene: SKScene
     var CurrentRound:Int = 1;
     var RoundTime:Int = 0;
     var RoundTimer:NSTimer = NSTimer();
+    
+    var AITimer:NSTimer = NSTimer();
+    
     var TimeLabel:SKLabelNode = SKLabelNode(fontNamed:"Chalkduster");
     var RoundLabel:SKLabelNode = SKLabelNode(fontNamed:"Chalkduster");
+    var PlayerOneWinsLabel:SKLabelNode = SKLabelNode(fontNamed:"Chalkduster");
+    var PlayerTwoWinsLabel:SKLabelNode = SKLabelNode(fontNamed:"Chalkduster");
+    
     //Containers for different states
     var pauseContainer:PauseContainer?;
     var confirmationContainer:ConfirmationContainer?;
@@ -66,6 +72,20 @@ class GameScene: SKScene
         self.GameMode = GameMode;
         self.Difficulty = Difficulty;
         NumOfPlayer = 1;
+        switch(Difficulty)
+        {
+        case 1:
+            Rounds = 10;
+            break;
+        case 2:
+            Rounds = 15;
+            break;
+        case 3:
+            Rounds = 20;
+            break;
+        default:
+            Rounds = 0;
+        }
     }
     //Init for multiplayer
     init(size:CGSize,PowerUps:Int, Timer:Int,Rounds:Int)
@@ -82,6 +102,9 @@ class GameScene: SKScene
     
     private func Reset()
     {
+        SetAITimer();
+        RoundTime = 0;
+        TimeLabel.text = "\(TimePerRound - RoundTime)";
         PlayerOne.SetPower(50);
         PlayerTwo.SetPower(50);
     }
@@ -89,6 +112,27 @@ class GameScene: SKScene
     {
         self.scaleMode = .AspectFill
         GameState = STATE_PLAYING;
+        TimeLabel.position = CGPointMake(self.frame.midX, self.frame.height - 120 );
+        TimeLabel.fontSize = 25;
+        TimeLabel.text = "\(TimePerRound - RoundTime)";
+        if(TimePerRound != 0)
+        {
+            addChild(TimeLabel);
+        }
+        
+        RoundLabel.position = CGPointMake(self.frame.midX, self.frame.height - 150);
+        RoundLabel.fontSize = 25;
+        if(GameMode == 2)
+        {
+            RoundLabel.text = "Rounds Completed : \(CurrentRound-1)";
+        }
+        else
+        {
+            RoundLabel.text = "Round \(CurrentRound) of \(Rounds)";
+        }
+        
+        addChild(RoundLabel);
+        
         PauseButton.SetPosition(CGPointMake(self.frame.midX - (PauseButton.GetWidth() / 2), PauseButton.GetHeight()));
         PlayerOneButton.SetPosition(CGPointMake(35, PlayerOneButton.GetHeight()));
         PlayerTwoButton.SetPosition(CGPointMake(self.frame.width - PlayerTwoButton.GetWidth(),PlayerOneButton.GetY()));
@@ -106,19 +150,8 @@ class GameScene: SKScene
                 self.PlayerTwo.LowerPower(self.PlayerOne.AddPower());
                 if(self.PlayerOne.GetPower() >= 100)
                 {
-                    self.CurrentRound++;
-                    if(self.CurrentRound > self.Rounds || (self.Rounds / 2 < self.CurrentRound && self.NumOfPlayer == 2))
-                    {
-                        if(self.NumOfPlayer == 1)
-                        {
-                            self.view?.presentScene(GameOverScene(size: self.size, GameMode: self.GameMode, Difficulty: self.Difficulty), transition: SKTransition.moveInWithDirection(SKTransitionDirection.Left, duration: 1));
-                        }
-                        else
-                        {
-                            self.view?.presentScene(GameOverScene(size: self.size, PowerUps: self.PowerUpsRate, TimePerRound: self.TimePerRound, Rounds: self.Rounds), transition: SKTransition.moveInWithDirection(SKTransitionDirection.Left, duration: 1));
-                        }
-                    }
-                    self.Reset();
+                    self.CurrentRound += 1;
+                    self.PlayerOneCheckWin();
                 }
             }
         }
@@ -129,27 +162,7 @@ class GameScene: SKScene
                 self.PlayerOne.LowerPower(self.PlayerTwo.AddPower());
                 if(self.PlayerTwo.GetPower() >= 100)
                 {
-                    if(self.NumOfPlayer == 2)
-                    {
-                        if(self.CurrentRound > self.Rounds / 2)
-                        {
-                            self.view?.presentScene(GameOverScene(size: self.size, PowerUps: self.PowerUpsRate, TimePerRound: self.TimePerRound, Rounds: self.Rounds), transition: SKTransition.moveInWithDirection(SKTransitionDirection.Left, duration: 1));
-                        }
-                        self.CurrentRound++;
-                        self.Reset();
-                    }
-                    else
-                    {
-                        if(self.GameMode == 1)
-                        {
-                            self.Reset();
-                        }
-                        else
-                        {
-                            self.view?.presentScene(GameOverScene(size: self.size, GameMode: self.GameMode, Difficulty: self.Difficulty), transition: SKTransition.moveInWithDirection(SKTransitionDirection.Left, duration: 1));
-                        }
-                    }
-                    
+                    self.PlayerTwoCheckWin();
                 }
             }
         }
@@ -202,11 +215,10 @@ class GameScene: SKScene
                 self.ChangeState(self.STATE_PAUSED);
             }
         }
-
+        SetAITimer();
         Timer = NSTimer.scheduledTimerWithTimeInterval(5.0, target:self, selector: ("spawnPowerup"), userInfo: nil, repeats: true);
         RoundTimer = NSTimer.scheduledTimerWithTimeInterval(1, target:self,selector:"OnRoundTimer",userInfo: nil, repeats:true);
-        
-        //sets the highscore for the gamemode
+                //sets the highscore for the gamemode
         if (NumOfPlayer == 1)
         {
             if (self.GameMode == 1) //Time Trial
@@ -241,10 +253,126 @@ class GameScene: SKScene
             }
         }
     }
+    
+    func SetAITimer()
+    {
+        if(AITimer.valid)
+        {
+            AITimer.invalidate();
+        }
+        if(NumOfPlayer == 1)
+        {
+            var time:NSTimeInterval = 0;
+            switch(Difficulty)
+            {
+            case 1:
+                time = 0.8;
+                break;
+            case 2:
+                time = 0.6;
+                break;
+            case 3:
+                time = 0.4;
+                break;
+            default:
+                time = 2;
+                break;
+            }
+            AITimer = NSTimer.scheduledTimerWithTimeInterval(time - (Double(CurrentRound) * 0.01), target:self, selector: "OnAIPress",userInfo:nil,repeats:true);
+        }
+
+    }
+    
+    
     func OnRoundTimer()
     {
-        self.RoundTime++;
+        if(GameState == STATE_PLAYING)
+        {
+            self.RoundTime += 1;
+        }
         
+        self.TimeLabel.text = "\(TimePerRound - RoundTime)";
+        
+        
+        if(TimePerRound - RoundTime == 0)
+        {
+            if(GameMode == 2)
+            {
+                 self.view?.presentScene(GameOverScene(size: self.size, GameMode: self.GameMode, Difficulty: self.Difficulty), transition: SKTransition.moveInWithDirection(SKTransitionDirection.Left, duration: 1));
+            }
+            else
+            {
+                CurrentRound+=1;
+                if(PlayerOne.GetPower()>PlayerTwo.GetPower())
+                {
+                    PlayerOneCheckWin();
+                }
+                else if(PlayerOne.GetPower()<PlayerTwo.GetPower())
+                {
+                    PlayerTwoCheckWin();
+                }
+                else
+                {
+                    CurrentRound -= 1;
+                    self.RoundLabel.text = "Round \(self.CurrentRound) of \(self.Rounds)";
+                }
+                Reset();
+            }
+        }
+        
+    }
+    func PlayerOneCheckWin()
+    {
+        self.PlayerOne.RoundsWon += 1;
+        if(self.GameMode != 2)
+        {
+            self.RoundLabel.text = "Round \(self.CurrentRound) of \(self.Rounds)";
+            let Num:Int = Int(round(Float(self.PlayerOne.RoundsWon) / 2));
+            if(self.CurrentRound > self.Rounds || (Num < self.CurrentRound && self.NumOfPlayer == 2))
+            {
+                if(self.NumOfPlayer == 1)
+                {
+                    
+                    self.view?.presentScene(GameOverScene(size: self.size, GameMode: self.GameMode, Difficulty: self.Difficulty), transition: SKTransition.moveInWithDirection(SKTransitionDirection.Left, duration: 1));
+                    
+                }
+                else
+                {
+                    self.view?.presentScene(GameOverScene(size: self.size, PowerUps: self.PowerUpsRate, TimePerRound: self.TimePerRound, Rounds: self.Rounds), transition: SKTransition.moveInWithDirection(SKTransitionDirection.Left, duration: 1));
+                }
+            }
+        }//end of not marathon mode
+        else
+        {
+            self.RoundLabel.text = "Rounds Completed : \(self.CurrentRound-1)";
+            self.RoundTime = self.TimePerRound;
+        }
+        self.Reset();
+    }
+    func PlayerTwoCheckWin()
+    {
+        if(self.NumOfPlayer == 2)
+        {
+            if(self.CurrentRound > self.Rounds / 2)
+            {
+                self.view?.presentScene(GameOverScene(size: self.size, PowerUps: self.PowerUpsRate, TimePerRound: self.TimePerRound, Rounds: self.Rounds), transition: SKTransition.moveInWithDirection(SKTransitionDirection.Left, duration: 1));
+            }
+            self.CurrentRound += 1;
+            self.RoundLabel.text = "Round \(self.CurrentRound) of \(self.Rounds)";
+            self.Reset();
+        }
+        else
+        {
+            if(self.GameMode == 1)
+            {
+                self.Reset();
+            }
+            else
+            {
+                self.view?.presentScene(GameOverScene(size: self.size, GameMode: self.GameMode, Difficulty: self.Difficulty), transition: SKTransition.moveInWithDirection(SKTransitionDirection.Left, duration: 1));
+            }
+        }
+
     }
     func ChangeState(state:Int)
     {
@@ -254,6 +382,8 @@ class GameScene: SKScene
             PauseButton.ButtonLabel.alpha = 0;
             PlayerOneButton.ButtonLabel.alpha = 0;
             PlayerTwoButton.ButtonLabel.alpha = 0;
+            RoundLabel.alpha = 0;
+            TimeLabel.alpha = 0;
             if(self.GameState == STATE_CONFIRMING)
             {
                 confirmationContainer?.removeFromParent();
@@ -270,6 +400,8 @@ class GameScene: SKScene
             PauseButton.ButtonLabel.alpha = 1;
             PlayerOneButton.ButtonLabel.alpha = 1;
             PlayerTwoButton.ButtonLabel.alpha = 1;
+            RoundLabel.alpha = 1;
+            TimeLabel.alpha = 1;
 
         }
         GameState = state;
@@ -309,17 +441,6 @@ class GameScene: SKScene
             }
         }
     }
-    func createLabel(text: String, fontSize: CGFloat, position: CGPoint)->SKLabelNode //function to create Labels
-    {
-        let label = SKLabelNode(text: text);
-        label.fontSize = fontSize;
-        label.fontColor = UIColor.whiteColor();
-        label.position = position;
-        label.verticalAlignmentMode = SKLabelVerticalAlignmentMode.Center;
-        //label.position.y -= fontSize/2;
-        return label;
-    }
-
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) //Handles touches
     {
        /* Called when a touch begins */
@@ -341,9 +462,19 @@ class GameScene: SKScene
 
         }
     }
-   
+    func OnAIPress()
+    {
+        PlayerTwoButton.onPressCode!();
+        if(self.powerup != nil)
+        {
+            if(self.powerup?.position.x >= self.frame.midX)
+            {
+                //Use power Up;
+                self.powerup = nil;
+            }
+        }
+    }
     override func update(currentTime: CFTimeInterval)
     {
-        /* Called before each frame is rendered */
     }
 }
