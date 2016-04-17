@@ -30,6 +30,11 @@ class GameScene: SKScene
     var GameMode:Int = 0; //1 = Time Trial & 2 = Marathon
     var Difficulty:Int = 0; //1 = Easy & 2 = Medium & 3 = Hard
     
+    var TimeTrialTimer:NSTimer = NSTimer();
+    var TimeTrialTime:Int = 0;
+    
+    
+    
     //Multiplayer Values
     var Rounds:Int = 0;
     var PowerUpsRate:Int = 0;
@@ -218,6 +223,11 @@ class GameScene: SKScene
         SetAITimer();
         Timer = NSTimer.scheduledTimerWithTimeInterval(5.0, target:self, selector: ("spawnPowerup"), userInfo: nil, repeats: true);
         RoundTimer = NSTimer.scheduledTimerWithTimeInterval(1, target:self,selector:"OnRoundTimer",userInfo: nil, repeats:true);
+        if(GameMode == 1)
+        {
+            TimeTrialTimer = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: "OnTimeTrialTimer", userInfo: nil, repeats: true);
+        }
+        
                 //sets the highscore for the gamemode
         if (NumOfPlayer == 1)
         {
@@ -278,12 +288,25 @@ class GameScene: SKScene
                 time = 2;
                 break;
             }
-            AITimer = NSTimer.scheduledTimerWithTimeInterval(time - (Double(CurrentRound) * 0.01), target:self, selector: "OnAIPress",userInfo:nil,repeats:true);
+            if(time - (Double(CurrentRound) * 0.01) < 0.1)
+            {
+                 AITimer = NSTimer.scheduledTimerWithTimeInterval(0.1, target:self, selector: "OnAIPress",userInfo:nil,repeats:true);
+            }
+            else
+            {
+                 AITimer = NSTimer.scheduledTimerWithTimeInterval(time - (Double(CurrentRound) * 0.01), target:self, selector: "OnAIPress",userInfo:nil,repeats:true);
+            }
         }
 
     }
     
-    
+    func OnTimeTrialTimer()
+    {
+        if (GameState == STATE_PLAYING)
+        {
+            TimeTrialTime += 1;
+        }
+    }
     func OnRoundTimer()
     {
         if(GameState == STATE_PLAYING)
@@ -298,7 +321,7 @@ class GameScene: SKScene
         {
             if(GameMode == 2)
             {
-                 self.view?.presentScene(GameOverScene(size: self.size, GameMode: self.GameMode, Difficulty: self.Difficulty), transition: SKTransition.moveInWithDirection(SKTransitionDirection.Left, duration: 1));
+                self.view?.presentScene(GameOverScene(size: self.size, GameMode: self.GameMode, Difficulty: self.Difficulty,value:CurrentRound), transition: SKTransition.moveInWithDirection(SKTransitionDirection.Left, duration: 1));
             }
             else
             {
@@ -327,18 +350,18 @@ class GameScene: SKScene
         if(self.GameMode != 2)
         {
             self.RoundLabel.text = "Round \(self.CurrentRound) of \(self.Rounds)";
-            let Num:Int = Int(round(Float(self.PlayerOne.RoundsWon) / 2));
-            if(self.CurrentRound > self.Rounds || (Num < self.CurrentRound && self.NumOfPlayer == 2))
+            let Num:Int = Int(round(Float(self.Rounds) / 2));
+            if(self.CurrentRound > self.Rounds || (Num <= PlayerOne.RoundsWon && self.NumOfPlayer == 2))
             {
                 if(self.NumOfPlayer == 1)
                 {
                     
-                    self.view?.presentScene(GameOverScene(size: self.size, GameMode: self.GameMode, Difficulty: self.Difficulty), transition: SKTransition.moveInWithDirection(SKTransitionDirection.Left, duration: 1));
+                    self.view?.presentScene(GameOverScene(size: self.size, GameMode: self.GameMode, Difficulty: self.Difficulty,value: TimeTrialTime), transition: SKTransition.moveInWithDirection(SKTransitionDirection.Left, duration: 1));
                     
                 }
                 else
                 {
-                    self.view?.presentScene(GameOverScene(size: self.size, PowerUps: self.PowerUpsRate, TimePerRound: self.TimePerRound, Rounds: self.Rounds), transition: SKTransition.moveInWithDirection(SKTransitionDirection.Left, duration: 1));
+                    self.view?.presentScene(GameOverScene(size: self.size, PowerUps: self.PowerUpsRate, TimePerRound: self.TimePerRound, Rounds: self.Rounds,Winner:1), transition: SKTransition.moveInWithDirection(SKTransitionDirection.Left, duration: 1));
                 }
             }
         }//end of not marathon mode
@@ -353,9 +376,10 @@ class GameScene: SKScene
     {
         if(self.NumOfPlayer == 2)
         {
-            if(self.CurrentRound > self.Rounds / 2)
+            let Num:Int = Int(round(Float(self.Rounds) / 2));
+            if(self.CurrentRound > self.Rounds || (Num <= self.PlayerTwo.RoundsWon))
             {
-                self.view?.presentScene(GameOverScene(size: self.size, PowerUps: self.PowerUpsRate, TimePerRound: self.TimePerRound, Rounds: self.Rounds), transition: SKTransition.moveInWithDirection(SKTransitionDirection.Left, duration: 1));
+                self.view?.presentScene(GameOverScene(size: self.size, PowerUps: self.PowerUpsRate, TimePerRound: self.TimePerRound, Rounds: self.Rounds,Winner: 2), transition: SKTransition.moveInWithDirection(SKTransitionDirection.Left, duration: 1));
             }
             self.CurrentRound += 1;
             self.RoundLabel.text = "Round \(self.CurrentRound) of \(self.Rounds)";
@@ -369,7 +393,7 @@ class GameScene: SKScene
             }
             else
             {
-                self.view?.presentScene(GameOverScene(size: self.size, GameMode: self.GameMode, Difficulty: self.Difficulty), transition: SKTransition.moveInWithDirection(SKTransitionDirection.Left, duration: 1));
+                self.view?.presentScene(GameOverScene(size: self.size, GameMode: self.GameMode, Difficulty: self.Difficulty,value:CurrentRound), transition: SKTransition.moveInWithDirection(SKTransitionDirection.Left, duration: 1));
             }
         }
 
