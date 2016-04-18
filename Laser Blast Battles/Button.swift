@@ -11,6 +11,7 @@
 //Thing to note is the coordinate system is a tad wonky and 0,0 of the images is the top of the container and the container draws from the bottom so for example if you want to show this you need the y positon = height for it to be at zero one day I will fix this
 
 import SpriteKit
+import AudioToolbox
 
 class Button:SKNode
 {
@@ -112,6 +113,14 @@ class Button:SKNode
             ButtonPressedState.alpha = 0;
             ButtonRegularState.alpha = 1;
             onPressCode!();
+            if(SoundEnabled)
+            {
+                self.runAction(SKAction.playSoundFileNamed("tapButtonSound.mp3", waitForCompletion: false));
+            }
+            if(VibrateEnabled)
+            {
+           //     AudioServicesPlayAlertSound(kSystemSoundID_Vibrate);
+            }
 
         }
     }

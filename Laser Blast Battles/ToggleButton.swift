@@ -7,6 +7,7 @@
 // Same as the regular buttons but this version toggles instead of being a regular button for specifics in positioning and usage see Button
 
 import SpriteKit
+import AudioToolbox
 
 class ToggleButton:SKNode
 {
@@ -103,6 +104,14 @@ class ToggleButton:SKNode
         {
             SetIsActive(!IsActive);
             onPressCode!();
+            if(SoundEnabled)
+            {
+                self.runAction(SKAction.playSoundFileNamed("tapButtonSound.mp3", waitForCompletion: false));
+            }
+            if(VibrateEnabled)
+            {
+                AudioServicesPlayAlertSound(kSystemSoundID_Vibrate);
+            }
         }
     }
 

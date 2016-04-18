@@ -7,7 +7,7 @@
 //
 
 import SpriteKit
-
+import AudioToolbox
 class GameScene: SKScene
 {
     //UI Variables
@@ -170,6 +170,10 @@ class GameScene: SKScene
             if(self.GameState == self.STATE_PLAYING)
             {
                 self.PlayerTwo.LowerPower(self.PlayerOne.AddPower());
+                if(SoundEnabled)
+                {
+                    self.runAction(SKAction.playSoundFileNamed("laser1.mp3", waitForCompletion: false));
+                }
                 if(self.PlayerOne.GetPower() >= 100)
                 {
                     self.CurrentRound += 1;
@@ -181,6 +185,10 @@ class GameScene: SKScene
         {
             if(self.GameState == self.STATE_PLAYING)
             {
+                if(SoundEnabled)
+                {
+                    self.runAction(SKAction.playSoundFileNamed("laser1.mp3", waitForCompletion: false));
+                }
                 self.PlayerOne.LowerPower(self.PlayerTwo.AddPower());
                 if(self.PlayerTwo.GetPower() >= 100)
                 {

@@ -28,6 +28,7 @@ class MainMenuScene: SKScene
     override func didMoveToView(view: SKView) //creates the Scene
     {
         self.scaleMode = .AspectFill;
+        
         self.titleLbl = createLabel("Laser Blast Battles!", fontSize: 50,
             position: CGPointMake(self.frame.midX, self.frame.height - 140));
         print("Frame height \(self.frame.height)");

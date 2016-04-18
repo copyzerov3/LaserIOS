@@ -25,6 +25,10 @@
 		FE6A503F1CB4957700D87A8B /* Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE6A503E1CB4957700D87A8B /* Button.swift */; };
 		FE83830C1CC2B04E00B03942 /* GameOverScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = FE83830A1CC2B04D00B03942 /* GameOverScene.sks */; };
 		FE83830D1CC2B04E00B03942 /* GameOverScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE83830B1CC2B04D00B03942 /* GameOverScene.swift */; };
+		FE8F17F21CC46E67005EC2A6 /* laser1.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = FE8F17EE1CC46E67005EC2A6 /* laser1.mp3 */; };
+		FE8F17F31CC46E67005EC2A6 /* laser2.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = FE8F17EF1CC46E67005EC2A6 /* laser2.mp3 */; };
+		FE8F17F41CC46E67005EC2A6 /* tapButtonSound.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = FE8F17F01CC46E67005EC2A6 /* tapButtonSound.mp3 */; };
+		FE8F17F51CC46E67005EC2A6 /* theme.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = FE8F17F11CC46E67005EC2A6 /* theme.mp3 */; };
 		FE8FBC0B1CB9A80C001D6BCF /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE8FBC0A1CB9A80C001D6BCF /* Player.swift */; };
 		FE8FBC0D1CB9AFBA001D6BCF /* PauseContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE8FBC0C1CB9AFBA001D6BCF /* PauseContainer.swift */; };
 		FE8FBC0F1CB9AFD0001D6BCF /* ConfirmationContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE8FBC0E1CB9AFD0001D6BCF /* ConfirmationContainer.swift */; };
@@ -57,6 +61,10 @@
 		FE6A503E1CB4957700D87A8B /* Button.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Button.swift; sourceTree = "<group>"; };
 		FE83830A1CC2B04D00B03942 /* GameOverScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameOverScene.sks; sourceTree = "<group>"; };
 		FE83830B1CC2B04D00B03942 /* GameOverScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameOverScene.swift; sourceTree = "<group>"; };
+		FE8F17EE1CC46E67005EC2A6 /* laser1.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = laser1.mp3; sourceTree = "<group>"; };
+		FE8F17EF1CC46E67005EC2A6 /* laser2.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = laser2.mp3; sourceTree = "<group>"; };
+		FE8F17F01CC46E67005EC2A6 /* tapButtonSound.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = tapButtonSound.mp3; sourceTree = "<group>"; };
+		FE8F17F11CC46E67005EC2A6 /* theme.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = theme.mp3; sourceTree = "<group>"; };
 		FE8FBC0A1CB9A80C001D6BCF /* Player.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
 		FE8FBC0C1CB9AFBA001D6BCF /* PauseContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PauseContainer.swift; sourceTree = "<group>"; };
 		FE8FBC0E1CB9AFD0001D6BCF /* ConfirmationContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfirmationContainer.swift; sourceTree = "<group>"; };
@@ -113,6 +121,10 @@
 		43A8B6E01CA895DC00977FCF /* Laser Blast Battles */ = {
 			isa = PBXGroup;
 			children = (
+				FE8F17EE1CC46E67005EC2A6 /* laser1.mp3 */,
+				FE8F17EF1CC46E67005EC2A6 /* laser2.mp3 */,
+				FE8F17F01CC46E67005EC2A6 /* tapButtonSound.mp3 */,
+				FE8F17F11CC46E67005EC2A6 /* theme.mp3 */,
 				438D64841CA96A1400647964 /* sks Files */,
 				43A8B6E11CA895DC00977FCF /* AppDelegate.swift */,
 				FE6A503E1CB4957700D87A8B /* Button.swift */,
@@ -200,13 +212,17 @@
 				FE96F4701CAA1DCB007ECC02 /* MainMenuScene.sks in Resources */,
 				43A8B6F01CA895DD00977FCF /* LaunchScreen.storyboard in Resources */,
 				FEB0B2A81CAA1E6000594FD2 /* PlayersSelectScene.sks in Resources */,
+				FE8F17F21CC46E67005EC2A6 /* laser1.mp3 in Resources */,
 				43A8B6ED1CA895DD00977FCF /* Assets.xcassets in Resources */,
+				FE8F17F41CC46E67005EC2A6 /* tapButtonSound.mp3 in Resources */,
 				43A8B6EB1CA895DC00977FCF /* Main.storyboard in Resources */,
 				FE96F46E1CAA1DCB007ECC02 /* CreditsScene.sks in Resources */,
 				FE96F46F1CAA1DCB007ECC02 /* HighScoresScene.sks in Resources */,
 				FEA84C7B1CB8945F006A226B /* MultiplayerSettingsScene.sks in Resources */,
+				FE8F17F31CC46E67005EC2A6 /* laser2.mp3 in Resources */,
 				FE83830C1CC2B04E00B03942 /* GameOverScene.sks in Resources */,
 				FEC705CB1CAA1F5B00773087 /* SinglePlayerSettingsScene.sks in Resources */,
+				FE8F17F51CC46E67005EC2A6 /* theme.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
