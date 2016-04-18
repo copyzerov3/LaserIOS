@@ -22,6 +22,10 @@ class GameOverScene:SKScene
     
     var Winner:Int = 0;
     var Value:Int = 0;
+    
+    var highscore = 0;
+    var HighscoreDefault = NSUserDefaults.standardUserDefaults();
+    
     //the value meaning is determined by the game mode either time taken or rounds completed
     init(size:CGSize,GameMode:Int, Difficulty:Int,value:Int)
     {
@@ -29,6 +33,55 @@ class GameOverScene:SKScene
         self.GameMode = GameMode;
         self.Difficulty = Difficulty;
         self.Value = value;
+        if (self.GameMode == 1) //Time Trial
+        {
+            if (self.Difficulty == 1)
+            {
+                if ((HighscoreDefault.valueForKey("tEasy") as! NSInteger) < value)
+                {
+                    HighscoreDefault.setValue(value, forKey: "tEasy");
+                }
+            }
+            if (self.Difficulty == 2)
+            {
+                if ((HighscoreDefault.valueForKey("tMedium") as! NSInteger) < value)
+                {
+                    HighscoreDefault.setValue(value, forKey: "tMedium");
+                }
+            }
+            if (self.Difficulty == 3)
+            {
+                if ((HighscoreDefault.valueForKey("tHard") as! NSInteger) < value)
+                {
+                    HighscoreDefault.setValue(value, forKey: "tHard");
+                }
+            }
+        }
+        else if (self.GameMode == 2) //Marathon
+        {
+            if (self.Difficulty == 1)
+            {
+                if ((HighscoreDefault.valueForKey("mEasy") as! NSInteger) < value)
+                {
+                    HighscoreDefault.setValue(value, forKey: "mEasy");
+                }
+            }
+            if (self.Difficulty == 2)
+            {
+                if ((HighscoreDefault.valueForKey("mMedium") as! NSInteger) < value)
+                {
+                    HighscoreDefault.setValue(value, forKey: "mMedium");
+                }
+            }
+            if (self.Difficulty == 3)
+            {
+                if ((HighscoreDefault.valueForKey("mHard") as! NSInteger) < value)
+                {
+                    HighscoreDefault.setValue(value, forKey: "mHard");
+                }
+            }
+        }
+
     }
     init(size:CGSize, PowerUps:Int, TimePerRound:Int, Rounds:Int,Winner:Int)
     {
