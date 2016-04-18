@@ -47,6 +47,8 @@ class GameScene: SKScene
     var timerDelay = 5.0;
     var powerup: SKSpriteNode?;
     var Timer:NSTimer = NSTimer();
+    var bPStunned: Bool = false;
+    var bCStunned: Bool = false;
     
     //Jarrett's temp score variables
     var score = 0;
@@ -169,15 +171,18 @@ class GameScene: SKScene
         {
             if(self.GameState == self.STATE_PLAYING)
             {
-                self.PlayerTwo.LowerPower(self.PlayerOne.AddPower());
-                if(SoundEnabled)
+                if (self.bPStunned == false)
                 {
-                    self.runAction(SKAction.playSoundFileNamed("laser1.mp3", waitForCompletion: false));
-                }
-                if(self.PlayerOne.GetPower() >= 100)
-                {
-                    self.CurrentRound += 1;
-                    self.PlayerOneCheckWin();
+                    self.PlayerTwo.LowerPower(self.PlayerOne.AddPower());
+                    if(SoundEnabled)
+                    {
+                        self.runAction(SKAction.playSoundFileNamed("laser1.mp3", waitForCompletion: false));
+                    }
+                    if(self.PlayerOne.GetPower() >= 100)
+                    {
+                        self.CurrentRound += 1;
+                        self.PlayerOneCheckWin();
+                    }
                 }
             }
         }
@@ -185,14 +190,17 @@ class GameScene: SKScene
         {
             if(self.GameState == self.STATE_PLAYING)
             {
-                if(SoundEnabled)
+                if (self.bPStunned)
                 {
-                    self.runAction(SKAction.playSoundFileNamed("laser1.mp3", waitForCompletion: false));
-                }
-                self.PlayerOne.LowerPower(self.PlayerTwo.AddPower());
-                if(self.PlayerTwo.GetPower() >= 100)
-                {
-                    self.PlayerTwoCheckWin();
+                    if(SoundEnabled)
+                    {
+                        self.runAction(SKAction.playSoundFileNamed("laser1.mp3", waitForCompletion: false));
+                    }
+                    self.PlayerOne.LowerPower(self.PlayerTwo.AddPower());
+                    if(self.PlayerTwo.GetPower() >= 100)
+                    {
+                        self.PlayerTwoCheckWin();
+                    }
                 }
             }
         }
@@ -421,7 +429,7 @@ class GameScene: SKScene
             }
             else
             {
-                self.view?.presentScene(GameOverScene(size: self.size, GameMode: self.GameMode, Difficulty: self.Difficulty,value:CurrentRound), transition: SKTransition.moveInWithDirection(SKTransitionDirection.Left, duration: 1));
+                self.view?.presentScene(GameOverScene(size: self.size, GameMode: self.GameMode, Difficulty: self.Difficulty,value:CurrentRound - 1), transition: SKTransition.moveInWithDirection(SKTransitionDirection.Left, duration: 1));
             }
         }
 
@@ -462,12 +470,13 @@ class GameScene: SKScene
     {
         if(GameState == STATE_PLAYING)
         {
-            if self.powerup == nil
+            if (self.powerup == nil)
             {
-                let sizeX = Int(CGRectGetMaxX(self.frame));
-                let sizeY = Int(CGRectGetMaxY(self.frame));
-                let randomX = CGFloat(Int(arc4random()) % sizeX - 50);
-                let randomY = CGFloat(Int(arc4random()) % sizeY - 150);
+                let sizeX = Int(CGRectGetMaxX(self.frame)) - 100;
+                let sizeY = Int(CGRectGetMaxY(self.frame)) - 200;
+                
+                let randomX = (CGFloat(Int(arc4random()) % sizeX) - 0);
+                let randomY = (CGFloat(Int(arc4random()) % sizeY) - 0);
                 
                 //Doesnt randomize location yet.
                 let newPowerup = SKSpriteNode(color: UIColor.blackColor(), size: CGSize(width: 50, height: 50));
@@ -480,10 +489,14 @@ class GameScene: SKScene
                     //newPowerup.color = UIColor.redColor();
                 }
                 
-                newPowerup.position = CGPointMake(randomX , randomY + 100);
+                newPowerup.position = CGPointMake(randomX + 50 , randomY + 100);
                 //newPowerup.position = CGPointMake(self.frame.midX ,self.frame.midY);
                 self.powerup = newPowerup;
                 self.addChild(self.powerup!);
+                PlayerOne.SetPowerScale(1); //reset stun and double power.
+                PlayerOne.SetPowerScale(1);
+                bPStunned = false;
+                bCStunned = false;
                 //return newPowerup;
             }
             else
@@ -493,6 +506,73 @@ class GameScene: SKScene
             }
         }
     }
+    
+    func dopowerup(location: CGPoint)
+    {
+        let randomP = (Int(arc4random()) % 5);
+        switch (randomP)
+        {
+        case 0: //Burst -> Call PlayerOneButton.onPressCode orPlayerTwoButton.onPressCode 4 times
+            if (location.x <= self.frame.midX)
+            {
+                for (var i:Int = 0; i < 4; i++)
+                {
+                    PlayerOneButton.onPressCode!();
+                }
+            }
+            else
+            {
+                for (var i:Int = 0; i < 4; i++)
+                {
+                    PlayerTwoButton.onPressCode!();
+                }
+            }
+            break;
+        case 1: //Switcharoo -> setpower of player 1 to  2 and vice versa
+            let tempPower:Float = PlayerOne.Power;
+            PlayerOne.SetPower(PlayerTwo.Power);
+            PlayerTwo.SetPower(tempPower);
+            break;
+            
+        case 2: //Slow Time -> player.swift setpowerscale to 0.5 then have a timer make it 1 again.
+            if (location.x <= self.frame.midX)
+            {
+                PlayerTwo.SetPowerScale(0.5);
+            }
+            else
+            {
+                PlayerOne.SetPowerScale(0.5);
+            }
+            
+            break;
+            
+        case 3: //Stun -> create a bool stunned for each player and timer it off.
+            if (location.x <= self.frame.midX)
+            {
+                bCStunned = true;
+            }
+            else
+            {
+                bPStunned = true;
+            }
+            break;
+            
+        case 4: //Power - > player.swift setpowerscale to 2 then have a timer make it 1 again.
+            if (location.x <= self.frame.midX)
+            {
+                PlayerOne.SetPowerScale(2);
+            }
+            else
+            {
+                PlayerTwo.SetPowerScale(2);
+            }
+            break;
+            
+        default:
+            break;
+        }
+    }
+    
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) //Handles touches
     {
        /* Called when a touch begins */
@@ -502,11 +582,8 @@ class GameScene: SKScene
             let node = self.nodeAtPoint(location)
             if (self.powerup != nil && node == self.powerup!)
             {
-                //Burst -> Call PlayerOneButton.onPressCode orPlayerTwoButton.onPressCode 4 times
-                //Switcharoo -> setpower of player 1 to  2 and vice versa
-                //Slow Time -> player.swift setpowerscale to 0.5 then have a timer make it 1 again.
-                //create a bool stunned for each player and timer it off.
-                //Power - > player.swift setpowerscale to 2 then have a timer make it 1 again.
+                dopowerup(location);
+                
                 //kills the powerup
                 self.powerup?.removeFromParent();
                 self.powerup = nil;
@@ -522,6 +599,8 @@ class GameScene: SKScene
             if(self.powerup?.position.x >= self.frame.midX)
             {
                 //Use power Up;
+                dopowerup(CGPoint(x: self.powerup!.position.x, y:0.0));
+                self.powerup?.removeFromParent();
                 self.powerup = nil;
             }
         }
